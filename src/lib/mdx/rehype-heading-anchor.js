@@ -10,7 +10,7 @@ import { visit } from 'unist-util-visit';
  * from `scroll-behavior` on the document, not from a click handler here.
  */
 
-const HEADINGS = new Set(['h2', 'h3', 'h4']);
+const HEADINGS = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 
 export function rehypeHeadingAnchor() {
 	/** @param {any} tree */

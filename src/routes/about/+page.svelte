@@ -43,6 +43,11 @@
 					<p>Think I got something wrong? Want to build something? Let me know:</p>
 					<p><a href="mailto:{site.author.email}">{site.author.email}</a></p>
 				</aside>
+
+				<p>
+					<strong>Note:</strong> This website's design is inspired by
+					<a href="https://sacred.computer">sacred.computer</a>.
+				</p>
 			</div>
 
 			<div class="mobile-first">

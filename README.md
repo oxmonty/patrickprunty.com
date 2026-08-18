@@ -15,7 +15,7 @@ To recreate this project with the same configuration:
 
 ```sh
 # recreate this project
-bun x sv@0.17.0 create --template minimal --types ts --add tailwindcss="plugins:typography" prettier eslint --no-download-check --install bun patrickprunty.v2
+bun x sv@0.17.0 create --template minimal --types ts --add tailwindcss="plugins:typography" prettier eslint --no-download-check --install bun patrickprunty.com
 ```
 
 ## Developing

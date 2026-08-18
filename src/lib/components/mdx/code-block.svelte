@@ -46,18 +46,30 @@
 		aria-label="{language} code block"
 		class="not-prose w-full max-w-full overflow-x-auto [&_pre]:m-0 [&_pre]:min-w-max [&_pre]:p-4 [&_pre]:font-mono [&_pre]:text-[0.8rem] [&_pre]:leading-[1.4]"
 	>
-		{@render children()}
+		<div class="min-w-max">
+			<!--
+				Sticky inside the scroller rather than absolute outside it. Absolute
+				pins the button to the block's box, which momentum scrolling on iOS
+				leaves behind: the content rubber-bands past its edge while the button
+				sits still. Sticky rides that transform with the code and still holds
+				the corner through a normal scroll. The row is zero-height, so it
+				overlays the block instead of pushing it down.
+			-->
+			<div class="flex h-0 items-start justify-end">
+				<button
+					type="button"
+					onclick={copy}
+					aria-label={copied ? 'Copied' : `Copy ${language} code`}
+					class="sticky top-0 right-0 z-10 bg-[var(--code-block-bg)] p-1.5 text-white/50 transition-colors hover:bg-[var(--code-block-bg-hover)] hover:text-white/90"
+				>
+					{#if copied}
+						<Check class="size-3" />
+					{:else}
+						<Copy class="size-3" />
+					{/if}
+				</button>
+			</div>
+			{@render children()}
+		</div>
 	</div>
-	<button
-		type="button"
-		onclick={copy}
-		aria-label={copied ? 'Copied' : `Copy ${language} code`}
-		class="absolute top-2 right-2 bg-[var(--code-block-bg)] p-1.5 text-white/50 transition-colors before:absolute before:-inset-2 before:block hover:bg-[var(--code-block-bg-hover)] hover:text-white/90"
-	>
-		{#if copied}
-			<Check class="size-3.5" />
-		{:else}
-			<Copy class="size-3.5" />
-		{/if}
-	</button>
 </div>
