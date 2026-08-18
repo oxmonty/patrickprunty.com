@@ -1,2 +1,552 @@
 @import 'tailwindcss';
+@import 'katex/dist/katex.min.css';
 @plugin '@tailwindcss/typography';
+
+/*
+ * Minimal semantic token set — only what the MDX components actually consume.
+ * Shaped like shadcn's naming so components can migrate later without a
+ * rename, but there is no shadcn dependency behind it.
+ */
+:root {
+	--background: #ffffff;
+	--foreground: #09090b;
+	--muted: #f4f4f5;
+	--muted-foreground: #71717a;
+	--border: #e4e4e7;
+	--primary: #2563eb;
+	--primary-foreground: #ffffff;
+	--accent: #f4f4f5;
+	/* Sharp corners throughout; kept as a token so nothing hardcodes a radius. */
+	--radius: 0;
+	/* Gutter between the text column and the figure column. */
+	--column-gap: 3rem;
+
+	/*
+	 * Editorial layer, after staydecent.ca: near-white paper, near-black ink,
+	 * and one acid-green highlight that only ever appears on link hover. Every
+	 * heading sits at 1rem and normal weight — hierarchy comes from underline,
+	 * caps, and whitespace, not size. The single exception is the page title.
+	 */
+	--paper: #fafafa;
+	--ink: #0a0a0a;
+	--ink-visited: #413d44;
+	--rule: #d7d2bf;
+	--highlight: #3f3;
+	/*
+	 * Callout backgrounds. --note is staydecent's .note yellow and the default;
+	 * the rest sit at the same lightness and chroma so a page of mixed callouts
+	 * reads as one family rather than a paint chart.
+	 */
+	--note: #ffeba1;
+	--note-info: #a1d5ff;
+	--note-success: #b6f0a1;
+	--note-warning: #ffd2a1;
+	--note-caution: #ffc4a1;
+	--note-danger: #ffb1a1;
+
+	/* Inline code, matching monthy/www's blue accent. Tokens rather than Tailwind
+	   utilities so the runtime-rendered notes get the same values without
+	   depending on a component being mounted to emit them. */
+	--code-bg: oklch(97% 0.014 254.604);
+	--code-fg: oklch(54.6% 0.245 262.881);
+
+	/* Code block surface. Must track `palette.background` in mdx/code-theme.js —
+	   the copy button sits on it, so a mismatch shows as a patch. */
+	--code-block-bg: #111111;
+	--code-block-bg-hover: #232323;
+	--gutter: 16px;
+	--gutter-lg: 64px;
+}
+
+.dark {
+	--background: #09090b;
+	--foreground: #fafafa;
+	--muted: #18181b;
+	--muted-foreground: #a1a1aa;
+	--border: #27272a;
+	--primary: #60a5fa;
+	--primary-foreground: #09090b;
+	--accent: #18181b;
+}
+
+/*
+ * 18px root, matching staydecent.ca. Every rem in the editorial layer is sized
+ * against this, so setting it on body instead would silently shrink each one by
+ * 12.5% — headings at 1rem, the page title at 5rem, the 1.4rem text rhythm.
+ *
+ * Their own `max-width: 800px` step to 16px is missing its selector and never
+ * applies, so the site is 18px at every width. Matched here rather than
+ * reproducing a rule that does nothing.
+ */
+html {
+	font-size: 18px;
+}
+
+@theme inline {
+	/*
+	 * SF Pro via the system-font keywords: Apple platforms resolve -apple-system
+	 * / BlinkMacSystemFont to it natively, with no webfont to download and no
+	 * licensing problem (SF Pro may not be self-hosted for the web). Everyone
+	 * else falls through to their own platform sans.
+	 */
+	--font-sans:
+		-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, 'Segoe UI',
+		Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-border: var(--border);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-accent: var(--accent);
+	--radius-token: var(--radius);
+
+	--color-paper: var(--paper);
+	--color-ink: var(--ink);
+	--color-ink-visited: var(--ink-visited);
+	--color-rule: var(--rule);
+	--color-highlight: var(--highlight);
+}
+
+/*
+ * Editorial layout, ported from staydecent.ca and shared by every page that
+ * uses the site chrome. It lives here rather than in a component's <style>
+ * because Svelte scopes styles per component, and these element rules have to
+ * reach page content rendered as a child snippet.
+ *
+ * The system has one type size: h1, h2, h3 and body all sit at 1rem in normal
+ * weight, and rank comes from underline, uppercase, and whitespace. The page
+ * title at 5rem is the only break in scale.
+ */
+/*
+ * In-page anchors — heading permalinks, footnote jumps — glide rather than cut.
+ * Native, so nothing needs a click handler to get it.
+ */
+html {
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+body {
+	/* Crisper text on macOS, where SF Pro renders heavy by default. */
+	-webkit-font-smoothing: antialiased;
+	background-color: var(--paper);
+	color: var(--ink);
+	font-family: var(--font-sans);
+	font-kerning: normal;
+	font-size: 1rem;
+	letter-spacing: 0.012em;
+	text-rendering: optimizeLegibility;
+}
+
+.editorial {
+	/* Figures hang past the right edge by a gutter; clip that rather than let it
+	   scroll the page sideways. `clip` does not create a scroll container. */
+	overflow-x: clip;
+	margin: 0 auto;
+	padding: 1rem;
+	text-align: left;
+	line-height: 1.22;
+	/* Full viewport height with the footer as the auto-margin item, so a short
+	   page still puts the footer on the bottom edge rather than mid-screen. */
+	display: flex;
+	flex-direction: column;
+	min-height: 100dvh;
+}
+
+.editorial header,
+.editorial article,
+.editorial footer {
+	max-width: 1280px;
+	padding: 0;
+}
+
+.editorial footer {
+	margin-top: auto;
+	padding-top: 10rem;
+	padding-bottom: 1rem;
+}
+
+.editorial h1 {
+	font-size: 1rem;
+	font-weight: normal;
+	line-height: 1;
+	margin-top: 0;
+	margin-bottom: 1.4rem;
+}
+
+.editorial h2,
+.editorial h3 {
+	font-size: 1rem;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+.editorial h3 {
+	text-transform: uppercase;
+}
+
+.editorial p {
+	margin-top: 1.4rem;
+	margin-bottom: 1.4rem;
+}
+
+.editorial p:first-child {
+	margin-top: 0;
+}
+
+.editorial p:last-child {
+	margin-bottom: 0;
+}
+
+.editorial aside {
+	padding-top: 2rem;
+}
+
+/* One underline treatment for every link, title and nav included. */
+.editorial a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+/* The one flash of colour on the whole page. */
+.editorial a:hover {
+	background-color: var(--highlight);
+}
+
+.editorial article a:visited {
+	color: var(--ink-visited);
+}
+
+.editorial img {
+	content-visibility: auto;
+	max-height: calc(100vh - 2rem);
+	max-width: 100%;
+}
+
+/*
+ * An image that is a column of its own fills that column. `max-width: 100%`
+ * alone only caps a large image — it never scales a small one up, so a source
+ * narrower than the column just stops short of the right edge.
+ */
+.editorial .cols > div > img {
+	width: 100%;
+	height: auto;
+}
+
+.editorial .cols {
+	display: grid;
+	grid-gap: 3rem;
+	/* minmax(0, 1fr) rather than a percentage: 50% + 50% + the gap is wider than
+	   the container, which pushed the listing sideways at wide viewports. */
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.editorial .article-intro {
+	padding: 5rem 0;
+	width: 68%;
+}
+
+.editorial .article-intro h2 {
+	font-size: 5rem;
+	margin: 0;
+	/* Tight: at 5rem the body's 1.22 leaves a gap you could park a line in. */
+	line-height: 0.95;
+	text-transform: none;
+	/* The page title carries its own rank at 5rem; the rule the smaller headings
+	   use would only crowd it. */
+	text-decoration: none;
+	/* No text-wrap here: `balance` shortens the lines to even them up, which
+	   leaves the title well short of full width on a phone. */
+	/* At 5rem a single long word is wider than a phone; break it rather than
+	   letting it scroll the whole page sideways. */
+	overflow-wrap: break-word;
+}
+
+@media screen and (max-width: 800px) {
+	.editorial article {
+		padding-top: 1rem;
+	}
+
+	.editorial h1 {
+		margin-bottom: 0;
+	}
+
+	.editorial .cols {
+		grid-gap: 1rem;
+		grid-template-columns: 1fr;
+	}
+
+	.editorial .cols > div {
+		max-width: 100%;
+	}
+
+	/* The portrait leads on narrow screens, ahead of the prose. */
+	.editorial .cols > .mobile-first {
+		order: -1;
+	}
+
+	.editorial .article-intro {
+		width: 100%;
+	}
+
+	.editorial .article-intro h2 {
+		font-size: 3rem;
+	}
+}
+
+@media screen and (min-width: 1988px) {
+	.editorial header,
+	.editorial article,
+	.editorial footer {
+		max-width: 2000px;
+	}
+
+	.editorial .cols {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+/*
+ * Markdown headings, matching staydecent.ca: there is no type scale in the body
+ * at all. Every heading sits at 1rem, and rank comes from caps, weight, and
+ * whitespace rather than size — only the 5rem page title breaks scale.
+ *
+ * Tailwind Typography's defaults are the opposite (800/700/600 across h1/h2/h3
+ * with em-relative sizes), so all of it is overridden here. Applied alongside
+ * `prose`, which keeps owning body copy, lists, tables, and code.
+ */
+.prose-editorial {
+	color: var(--ink);
+
+	--tw-prose-body: var(--ink);
+	--tw-prose-headings: var(--ink);
+	--tw-prose-lead: var(--ink);
+	--tw-prose-links: var(--ink);
+	--tw-prose-bold: var(--ink);
+	--tw-prose-counters: var(--ink);
+	--tw-prose-bullets: var(--ink);
+	--tw-prose-quotes: var(--ink);
+	--tw-prose-captions: var(--ink);
+	--tw-prose-hr: var(--rule);
+	--tw-prose-quote-borders: var(--rule);
+	--tw-prose-th-borders: var(--rule);
+	--tw-prose-td-borders: var(--rule);
+}
+
+.prose-editorial :is(h1, h2, h3, h4, h5, h6) {
+	font-size: 1rem;
+	/* One step over body copy — same lift the listing titles use. */
+	font-weight: 500;
+	/* Caps open up at this size, so a touch of tracking keeps them from
+	   crowding; without it uppercase reads tighter than the lowercase around it. */
+	letter-spacing: 0.02em;
+	line-height: 1.22;
+	/* Same rhythm as body copy: adjacent margins collapse, so a heading sits in
+	   the paragraph flow rather than announcing itself with space. */
+	margin-top: 1.4rem;
+	margin-bottom: 1.4rem;
+	text-transform: uppercase;
+	text-wrap: balance;
+	/* Clears the heading when a rehype-slug anchor jumps to it. */
+	scroll-margin-top: 2rem;
+}
+
+/* The first heading sits against the page title; it needs no leading gap. */
+.prose-editorial > :is(h1, h2, h3, h4, h5, h6):first-child {
+	margin-top: 0;
+}
+
+/*
+ * Post body: prose keeps a readable measure while figures take the empty space
+ * beside it. The text column is capped rather than the wrapper, so a floated
+ * figure has somewhere to go — capping the wrapper would leave no room.
+ */
+.prose-editorial > * {
+	max-width: 42rem;
+}
+
+/*
+ * Runtime-rendered embeds (notes come from Redis as markdown, so they have no
+ * component wrapper) get the same box the components produce.
+ */
+.prose-editorial .embed {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	width: 100%;
+	margin: 1.4rem 0;
+}
+
+.prose-editorial .embed iframe {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.prose-editorial > :is(img, video, audio) {
+	width: 100%;
+	margin: 1.4rem 0;
+}
+
+@media screen and (min-width: 1024px) {
+	/* Text takes the left half exactly. */
+	.prose-editorial > * {
+		max-width: 50%;
+	}
+
+	/*
+	 * Every media kind sits in the right column: figures and component wrappers
+	 * via .media-aside, runtime embeds via .embed, and bare media that markdown
+	 * emits directly. They hang a gutter past the container's right edge —
+	 * staydecent gets that for free from two 50% grid tracks plus a 3rem gap
+	 * totalling 100% + 3rem; a contained float stops a gutter short.
+	 */
+	.prose-editorial :is(figure, .media-aside, .embed, .og-card),
+	.prose-editorial > :is(img, video, audio) {
+		float: right;
+		/* Consecutive media stack down the right rather than side by side. */
+		clear: right;
+		width: 50%;
+		max-width: none;
+		margin: 1.4rem calc(-1 * var(--column-gap)) 1.4rem 0;
+	}
+
+	/* The figure is the frame, so its contents fill it. */
+	.prose-editorial figure > :is(img, button, a) {
+		width: 100%;
+	}
+
+	.prose-editorial figure img {
+		width: 100%;
+		height: auto;
+	}
+}
+
+/*
+ * Line spacing is uniform at the site value. Tailwind Typography leaves several
+ * elements looser than this — pre at 1.71, figcaption at 1.43, lead at 1.6 —
+ * which read as inconsistent next to body copy inheriting 1.22.
+ */
+.prose-editorial :is(p, li, ul, ol, dl, dd, blockquote, figcaption, table, th, td) {
+	line-height: 1.22;
+}
+
+/* Body copy: pretty avoids a single orphaned word on the last line. */
+.prose-editorial p,
+.prose-editorial li {
+	text-wrap: pretty;
+}
+
+/*
+ * Link preview card for a bare URL in a note. Built as static HTML by the
+ * server renderer rather than by the OgCard component, since notes are
+ * markdown compiled at runtime and cannot mount Svelte components.
+ */
+.prose-editorial .og-card a {
+	display: block;
+	border: 1px solid var(--border);
+	text-decoration: none;
+}
+
+.prose-editorial .og-card a:hover {
+	background-color: var(--highlight);
+}
+
+.prose-editorial .og-card .og-image {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1.91 / 1;
+	object-fit: cover;
+	margin: 0;
+}
+
+.prose-editorial .og-card .og-domain,
+.prose-editorial .og-card .og-title {
+	display: block;
+	padding: 0 0.8rem;
+	font-size: 0.85rem;
+}
+
+.prose-editorial .og-card .og-domain {
+	padding-top: 0.8rem;
+	color: var(--ink-visited);
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.prose-editorial .og-card .og-title {
+	padding-bottom: 0.8rem;
+	font-weight: 500;
+}
+
+/*
+ * Notes keep everything in the text column: media sits inline where it was
+ * written, at the column's width. The float that posts use is unset here — a
+ * note is short enough that a second column reads as a gap rather than a
+ * layout.
+ */
+.note .prose-editorial :is(figure, .media-aside, .embed, .og-card) {
+	float: none;
+	width: 100%;
+	margin: 1.4rem 0;
+}
+
+/*
+ * Cap the note's container rather than its children. The shared rule caps only
+ * *direct* children, so anything marked wrapped one level deeper — an image
+ * inside a figure inside a div — escaped it and ran the full page width.
+ * Bounding the container catches every case regardless of nesting.
+ */
+@media screen and (min-width: 1024px) {
+	.note .prose-editorial {
+		max-width: 50%;
+	}
+
+	/* Children fill that column; 50% of an already-halved box would be a quarter. */
+	.note .prose-editorial > * {
+		max-width: 100%;
+	}
+}
+
+/*
+ * Inline code in runtime-rendered notes. Posts get this from the inline-code
+ * component; notes are compiled markdown with no component to mount, so the
+ * same treatment is applied here — including removing Typography's literal
+ * backticks and its 600 weight.
+ */
+.prose-editorial :not(pre) > code {
+	background-color: var(--code-bg);
+	color: var(--code-fg);
+	padding: 0.125rem 0.25rem;
+	font-family: var(--font-mono, ui-monospace, monospace);
+	font-size: 0.85em;
+	font-weight: 400;
+	letter-spacing: -0.01em;
+	word-spacing: -0.2em;
+	border-radius: 0;
+}
+
+.prose-editorial :not(pre) > code::before,
+.prose-editorial :not(pre) > code::after {
+	content: none;
+}
+
+/*
+ * Heading permalinks from rehype-heading-anchor. The link wraps the heading
+ * text, so it inherits the heading entirely and only the cursor says it is
+ * clickable — the underline the rest of the site's links carry would read as
+ * the heading rule here.
+ */
+.prose-editorial .heading-anchor {
+	color: inherit;
+	text-decoration: none;
+	cursor: pointer;
+}

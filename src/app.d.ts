@@ -11,3 +11,8 @@ declare global {
 }
 
 export {};
+
+declare module '*.ttf' {
+	const src: string;
+	export default src;
+}

@@ -34,6 +34,14 @@ export default defineConfig(
 		}
 	},
 	{
+		// Most hrefs here are external (author-supplied URLs in the MDX registry,
+		// profile links in the site config), which resolve() does not apply to.
+		// Internal routes still use resolve(); goto/pushState stay checked.
+		rules: {
+			'svelte/no-navigation-without-resolve': ['error', { ignoreLinks: true }]
+		}
+	},
+	{
 		// Override or add rule settings here, such as:
 		// 'svelte/button-has-type': 'error'
 		rules: {}
