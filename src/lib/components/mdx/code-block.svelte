@@ -60,7 +60,7 @@
 					type="button"
 					onclick={copy}
 					aria-label={copied ? 'Copied' : `Copy ${language} code`}
-					class="sticky top-0 right-0 z-10 bg-[var(--code-block-bg)] p-1.5 text-white/50 transition-colors hover:bg-[var(--code-block-bg-hover)] hover:text-white/90"
+					class="sticky top-0 right-0 z-10 bg-[var(--code-block-bg)] p-1.5 text-white/50 transition-colors hover:bg-[var(--code-block-bg-hover)] hover:text-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
 				>
 					{#if copied}
 						<Check class="size-3" />

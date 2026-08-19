@@ -27,7 +27,9 @@ type PostModules = Record<string, { metadata?: PostFrontmatter }>;
 export function toPosts(modules: PostModules): Post[] {
 	return Object.entries(modules)
 		.map(([path, module]) => ({
-			slug: path.replace('./', '').replace('/+page.md', ''),
+			// The directory the file sits in, so the same helper serves a route's own
+			// './<slug>/+page.md' glob and a cross-route '../blog/<slug>/+page.md' one.
+			slug: path.split('/').at(-2) ?? '',
 			title: module.metadata?.title ?? 'Untitled',
 			description: module.metadata?.description ?? '',
 			date: module.metadata?.date ?? '',

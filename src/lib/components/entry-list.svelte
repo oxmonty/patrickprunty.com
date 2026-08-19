@@ -96,6 +96,7 @@
 						href={entry.href}
 						target={isExternal(entry.href) ? '_blank' : undefined}
 						rel={isExternal(entry.href) ? 'noopener noreferrer' : undefined}
+						aria-label={isExternal(entry.href) ? `${entry.title} (opens in a new tab)` : undefined}
 						onmouseenter={(event) => entry.preview && track(event, entry.preview)}
 						onmousemove={(event) => entry.preview && track(event, entry.preview)}
 						onmouseleave={() => (preview = null)}
@@ -194,13 +195,14 @@
 	 * as a stripe of link underline beneath it.
 	 */
 	/*
-	 * Two steps up from the 400 everything else sits at. Scoped under .cols so it
-	 * outranks the global `.editorial h3` rule on specificity rather than relying
-	 * on stylesheet order. SF Pro ships a real Semibold, so this is an actual cut,
-	 * not a synthesised bold.
+	 * The same 500 the markdown headings sit at, so a listing title and a heading
+	 * inside a post read as one rank. Scoped under .cols so it outranks the
+	 * global `.editorial h3` rule on specificity rather than relying on
+	 * stylesheet order. SF Pro ships a real Medium, so this is an actual cut, not
+	 * a synthesised bold.
 	 */
 	.cols h3 {
-		font-weight: 600;
+		font-weight: 500;
 	}
 
 	.preview {

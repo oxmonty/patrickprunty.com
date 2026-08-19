@@ -6,7 +6,6 @@ export const site = {
 	name: 'Patrick Prunty',
 	domain: 'patrickprunty.com',
 	url,
-	ogImage: `${url}/icon.webp`,
 	description: 'Software developer, writer, and occasional adventurer',
 	locale: 'en_US',
 	themeColor: '#F5F5F7',
@@ -19,6 +18,8 @@ export const site = {
 	links: {
 		twitter: 'https://twitter.com/pprunty_',
 		github: 'https://github.com/pprunty',
+		/** This site's own repository, linked from the footer's build hash. */
+		repo: 'https://github.com/oxmonty/patrickprunty.com',
 		substack: 'https://substack.com/@pprunty',
 		/** The publication itself, which is what /subscribe hangs off. */
 		newsletter: 'https://pprunty.substack.com/subscribe',

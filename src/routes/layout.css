@@ -210,6 +210,35 @@ body {
 	padding-top: 2rem;
 }
 
+/*
+ * One focus ring for every interactive element, keyboard only. `:where` keeps
+ * it at zero specificity, so a component can still style its own focus without
+ * fighting this rule. Never removed anywhere: it is the only signal a keyboard
+ * user has for where they are on the page.
+ */
+:where(a, area, button, input, select, summary, textarea, [tabindex]):focus-visible {
+	outline: 2px solid var(--ink);
+	outline-offset: 2px;
+}
+
+/*
+ * Skip link: the first tab stop on every page, so a keyboard or screen-reader
+ * user can jump the header nav. Off-screen until focused rather than
+ * display:none, which would take it out of the tab order entirely.
+ */
+.skip-link {
+	position: absolute;
+	left: -9999px;
+	top: 0;
+	z-index: 100;
+	background-color: var(--paper);
+	padding: 0.5rem 1rem;
+}
+
+.skip-link:focus {
+	left: 0;
+}
+
 /* One underline treatment for every link, title and nav included. */
 .editorial a {
 	color: inherit;
@@ -219,10 +248,6 @@ body {
 /* The one flash of colour on the whole page. */
 .editorial a:hover {
 	background-color: var(--highlight);
-}
-
-.editorial article a:visited {
-	color: var(--ink-visited);
 }
 
 .editorial img {
@@ -259,7 +284,7 @@ body {
 	margin: 0;
 	/* Tight: at 5rem the body's 1.22 leaves a gap you could park a line in. */
 	line-height: 0.95;
-	text-transform: none;
+	text-transform: uppercase;
 	/* The page title carries its own rank at 5rem; the rule the smaller headings
 	   use would only crowd it. */
 	text-decoration: none;
@@ -373,24 +398,6 @@ body {
 	max-width: 42rem;
 }
 
-/*
- * Runtime-rendered embeds (notes come from Redis as markdown, so they have no
- * component wrapper) get the same box the components produce.
- */
-.prose-editorial .embed {
-	position: relative;
-	aspect-ratio: 16 / 9;
-	width: 100%;
-	margin: 1.4rem 0;
-}
-
-.prose-editorial .embed iframe {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-}
-
 .prose-editorial > :is(img, video, audio) {
 	width: 100%;
 	margin: 1.4rem 0;
@@ -404,12 +411,11 @@ body {
 
 	/*
 	 * Every media kind sits in the right column: figures and component wrappers
-	 * via .media-aside, runtime embeds via .embed, and bare media that markdown
-	 * emits directly. They hang a gutter past the container's right edge —
+	 * via .media-aside, and bare media that markdown emits directly. They hang a gutter past the container's right edge —
 	 * staydecent gets that for free from two 50% grid tracks plus a 3rem gap
 	 * totalling 100% + 3rem; a contained float stops a gutter short.
 	 */
-	.prose-editorial :is(figure, .media-aside, .embed, .og-card),
+	.prose-editorial :is(figure, .media-aside),
 	.prose-editorial > :is(img, video, audio) {
 		float: right;
 		/* Consecutive media stack down the right rather than side by side. */
@@ -443,95 +449,6 @@ body {
 .prose-editorial p,
 .prose-editorial li {
 	text-wrap: pretty;
-}
-
-/*
- * Link preview card for a bare URL in a note. Built as static HTML by the
- * server renderer rather than by the OgCard component, since notes are
- * markdown compiled at runtime and cannot mount Svelte components.
- */
-.prose-editorial .og-card a {
-	display: block;
-	border: 1px solid var(--border);
-	text-decoration: none;
-}
-
-.prose-editorial .og-card a:hover {
-	background-color: var(--highlight);
-}
-
-.prose-editorial .og-card .og-image {
-	display: block;
-	width: 100%;
-	aspect-ratio: 1.91 / 1;
-	object-fit: cover;
-	margin: 0;
-}
-
-.prose-editorial .og-card .og-domain,
-.prose-editorial .og-card .og-title {
-	display: block;
-	padding: 0 0.8rem;
-	font-size: 0.85rem;
-}
-
-.prose-editorial .og-card .og-domain {
-	padding-top: 0.8rem;
-	color: var(--ink-visited);
-	text-transform: uppercase;
-	letter-spacing: 0.02em;
-}
-
-.prose-editorial .og-card .og-title {
-	padding-bottom: 0.8rem;
-	font-weight: 500;
-}
-
-/*
- * Notes keep everything in the text column: media sits inline where it was
- * written, at the column's width. The float that posts use is unset here — a
- * note is short enough that a second column reads as a gap rather than a
- * layout.
- */
-.note .prose-editorial :is(figure, .media-aside, .embed, .og-card) {
-	float: none;
-	width: 100%;
-	margin: 1.4rem 0;
-}
-
-/*
- * Cap the note's container rather than its children. The shared rule caps only
- * *direct* children, so anything marked wrapped one level deeper — an image
- * inside a figure inside a div — escaped it and ran the full page width.
- * Bounding the container catches every case regardless of nesting.
- */
-@media screen and (min-width: 1024px) {
-	.note .prose-editorial {
-		max-width: 50%;
-	}
-
-	/* Children fill that column; 50% of an already-halved box would be a quarter. */
-	.note .prose-editorial > * {
-		max-width: 100%;
-	}
-}
-
-/*
- * Inline code in runtime-rendered notes. Posts get this from the inline-code
- * component; notes are compiled markdown with no component to mount, so the
- * same treatment is applied here — including removing Typography's literal
- * backticks and its 600 weight.
- */
-.prose-editorial :not(pre) > code {
-	background-color: var(--code-bg);
-	color: var(--code-fg);
-	padding: 0.125rem 0.25rem;
-	font-family: var(--font-mono, ui-monospace, monospace);
-	font-size: 0.85em;
-	font-weight: 400;
-	letter-spacing: -0.01em;
-	word-spacing: -0.2em;
-	border-radius: 0;
 }
 
 .prose-editorial :not(pre) > code::before,

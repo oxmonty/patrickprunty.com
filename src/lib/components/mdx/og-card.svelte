@@ -97,4 +97,8 @@
 			<span class="text-sm break-all text-foreground">{url}</span>
 		</div>
 	{/if}
+	<!-- The card's name comes from its own content, so the new-tab note is a
+	     separate visually hidden line rather than an aria-label that would
+	     replace the title and description. -->
+	<span class="sr-only">(opens in a new tab)</span>
 </a>

@@ -31,6 +31,9 @@
 <dialog
 	bind:this={dialog}
 	onclick={() => dialog?.close()}
+	aria-label={alt
+		? `${alt} (enlarged). Press Escape to close.`
+		: 'Enlarged image. Press Escape to close.'}
 	class="m-auto max-h-[90dvh] max-w-[95vw] bg-transparent backdrop:bg-black/80"
 >
 	<img {src} {alt} class="max-h-[90dvh] max-w-[95vw] cursor-zoom-out object-contain" />

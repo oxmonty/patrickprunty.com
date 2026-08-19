@@ -35,6 +35,10 @@ export default defineMDSveXConfig({
 	rehypePlugins: /** @type {any[]} */ ([
 		rehypeSlug,
 		rehypeHeadingAnchor,
+		// html, not the default htmlAndMathml: the MathML copy carries an
+		// <annotation> holding the raw TeX, whose braces the Svelte compiler reads
+		// as a template expression and 500s on. Screen-reader math would be worth
+		// having — it needs the annotation escaped before the compiler sees it.
 		[rehypeKatex, { output: 'html' }]
 	]),
 	highlight: { highlighter }

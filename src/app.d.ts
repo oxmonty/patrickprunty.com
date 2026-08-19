@@ -8,6 +8,9 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	/** Injected by vite.config.ts: the short SHA the site was built from. */
+	const __GIT_HASH__: string;
 }
 
 export {};
