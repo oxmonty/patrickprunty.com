@@ -1,8 +1,8 @@
 ---
 title: OX MONTY
 description: The org everything I build ships under, and what each piece is actually for.
-date: 2026-08-15
-image: /images/ox-monty.png
+date: 2026-08-13
+image: /icons/512x512.png
 ---
 
 <!-- TODO: stub. Replace with the real piece. -->
