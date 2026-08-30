@@ -52,7 +52,7 @@
 
 {#if src}
 	<div
-		class="media-aside not-prose relative my-6 w-full overflow-hidden"
+		class="not-prose relative my-6 w-full overflow-hidden"
 		style:aspect-ratio={String(ratio ?? 16 / 9)}
 	>
 		{#if !loaded}

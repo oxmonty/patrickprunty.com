@@ -32,7 +32,7 @@
 </script>
 
 <div
-	class={cn('media-aside not-prose relative my-6', className)}
+	class={cn('not-prose relative my-6', className)}
 	style:width={typeof width === 'number' ? `${width}px` : width}
 	style:height={typeof resolvedHeight === 'number' ? `${resolvedHeight}px` : resolvedHeight}
 >

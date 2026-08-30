@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { previewPlayback } from '$lib/actions/preview-playback';
 	import { revealOnLoad } from '$lib/actions/reveal-on-load';
+	import DraftBadge from '$lib/components/draft-badge.svelte';
 
 	/**
 	 * The listing body shared by /blog, /code, and /projects. Entries arrive with
@@ -17,6 +18,8 @@
 		video?: string;
 		/** Revealed on title hover rather than shown inline. Desktop only. */
 		preview?: string;
+		/** Unpublished. Reaches the listing in dev only. */
+		draft?: boolean;
 	}
 
 	let { tagline, entries }: { tagline: string; entries: Entry[] } = $props();
@@ -104,7 +107,7 @@
 								aria-hidden="true"
 								class="external-arrow">&#8599;</span
 							>{/if}</a
-					>
+					>{#if entry.draft}<DraftBadge />{/if}
 				</h3>
 
 				<p>
@@ -213,10 +216,12 @@
 
 	/*
 	 * One ratio for every preview, so the tiles line up regardless of what the
-	 * source asset happens to be. 16/10 because the three screenshots are all
-	 * 1.59 — near-identical, so they crop imperceptibly — while the 16/9 video
-	 * loses a little top and bottom, which reads better on motion than slicing
-	 * the sides off a screenshot would.
+	 * source asset happens to be. Only /projects renders these — blog and code
+	 * pass `preview` for the cursor tile instead, never `image` or `video`.
+	 *
+	 * Every source is wider than 3/2 (1.50 for biscuit, 1.59 for the webp
+	 * screenshots, 1.65 for delta, 1.78 for lotso), so `cover` only ever trims
+	 * the sides. Nothing loses its top or bottom edge.
 	 */
 	.preview img,
 	.preview video {
@@ -224,7 +229,7 @@
 		transition: opacity 400ms ease-out;
 		display: block;
 		width: 100%;
-		aspect-ratio: 16 / 10;
+		aspect-ratio: 3 / 2;
 		object-fit: cover;
 	}
 

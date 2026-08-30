@@ -4,21 +4,13 @@
 
 	let {
 		id,
-		size = 'medium',
 		caption,
 		class: className = ''
 	}: {
 		id: string;
-		size?: 'small' | 'medium' | 'large';
 		caption?: string;
 		class?: string;
 	} = $props();
-
-	const sizeClasses = {
-		small: 'max-w-sm',
-		medium: 'max-w-xl',
-		large: 'max-w-2xl'
-	};
 
 	// ponytail: v1 used react-tweet (server-fetches the tweet JSON and renders it
 	// itself). No Svelte equivalent exists, so this is X's own embed iframe —
@@ -50,8 +42,8 @@
 
 <svelte:window onmessage={onMessage} />
 
-<figure class={cn('media-aside not-prose my-6 w-full', sizeClasses[size], className)}>
-	<div class="relative w-full" style:height="{height}px">
+<figure class={cn('not-prose my-6 w-full', className)}>
+	<div class="relative mx-auto w-full" style:height="{height}px">
 		{#if !loaded}
 			<Skeleton class="absolute inset-0 h-full w-full" />
 		{/if}

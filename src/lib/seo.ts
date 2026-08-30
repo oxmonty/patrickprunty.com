@@ -4,6 +4,16 @@ export function absoluteUrl(path: string): string {
 	return new URL(path, site.url).href;
 }
 
+/**
+ * Address of a page's OpenGraph card. Mirrors the page's own path, with 'home'
+ * standing in for the root, which has no segment of its own. The card route
+ * generates exactly these paths — keep the two in step.
+ */
+export function ogPath(path: string): string {
+	const segment = path.replace(/^\/|\/$/g, '');
+	return `/og/${segment || 'home'}.png`;
+}
+
 export interface SeoInput {
 	title?: string;
 	description?: string;
@@ -31,14 +41,9 @@ export interface Seo extends Required<Omit<SeoInput, 'publishedTime' | 'modified
  */
 export function buildSeo(input: SeoInput = {}): Seo {
 	const description = input.description ?? site.description;
-	// An explicit image wins; everything else gets a card drawn from its own
-	// title and description by /og, so no page falls back to the bare site icon.
-	const image = input.image
-		? absoluteUrl(input.image)
-		: absoluteUrl(
-				`/og?title=${encodeURIComponent(input.title ?? site.name)}` +
-					`&description=${encodeURIComponent(description)}`
-			);
+	// An explicit image wins; everything else gets the card built for it at
+	// build time, so no page falls back to the bare site icon.
+	const image = absoluteUrl(input.image ?? ogPath(input.path ?? '/'));
 
 	return {
 		title: input.title ? `${site.name} \\ ${input.title}` : site.name,

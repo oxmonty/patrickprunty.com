@@ -18,8 +18,16 @@ const ESCAPES: Record<string, string> = {
 	"'": '&apos;'
 };
 
+/**
+ * XML 1.0 has no way to represent most control characters, escaped or not, so a
+ * stray one anywhere in the frontmatter would make the whole feed unparseable
+ * for every subscriber at once. Dropped rather than escaped for that reason.
+ */
+// eslint-disable-next-line no-control-regex
+const INVALID_XML = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]/g;
+
 function escapeXml(value: string): string {
-	return value.replace(/[&<>"']/g, (character) => ESCAPES[character]);
+	return value.replace(INVALID_XML, '').replace(/[&<>"']/g, (character) => ESCAPES[character]);
 }
 
 /**
@@ -56,6 +64,7 @@ function mimeType(path: string): string {
 	if (extension === 'png') return 'image/png';
 	if (extension === 'webp') return 'image/webp';
 	if (extension === 'gif') return 'image/gif';
+	if (extension === 'svg') return 'image/svg+xml';
 	return 'image/jpeg';
 }
 
@@ -81,6 +90,8 @@ export function buildRssFeed(items: FeedItem[], feedPath: string): string {
 		<managingEditor>${escapeXml(site.author.email)} (${escapeXml(site.author.name)})</managingEditor>
 		<webMaster>${escapeXml(site.author.email)} (${escapeXml(site.author.name)})</webMaster>
 		<lastBuildDate>${toRfc822(latest ?? new Date().toISOString())}</lastBuildDate>
+		<generator>SvelteKit</generator>
+		<docs>https://www.rssboard.org/rss-specification</docs>
 		<atom:link href="${escapeXml(self)}" rel="self" type="application/rss+xml" />${items
 			.map(toItem)
 			.join('')}

@@ -4,12 +4,10 @@
   "workspaces": {
     "": {
       "name": "patrickprunty.com",
-      "dependencies": {
-        "@resvg/resvg-js": "^2.6.2",
-      },
       "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@lucide/svelte": "^1.31.0",
+        "@resvg/resvg-js": "^2.6.2",
         "@sveltejs/adapter-node": "^5.5.7",
         "@sveltejs/kit": "^2.63.0",
         "@sveltejs/vite-plugin-svelte": "^7.1.2",

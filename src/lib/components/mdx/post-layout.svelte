@@ -10,26 +10,30 @@
 <script lang="ts">
 	import { page } from '$app/state';
 
+	import DraftBadge from '$lib/components/draft-badge.svelte';
 	import EditorialPage from '$lib/components/editorial-page.svelte';
+	import PostViews from '$lib/components/post-views.svelte';
 	import Seo from '$lib/components/seo.svelte';
 	import Subscribe from '$lib/components/subscribe.svelte';
 	import { site } from '$lib/config/site';
 	import type { Post } from '$lib/posts';
 
-	// Frontmatter arrives as props; the rest of it (description, date) is read by
-	// the index loader, not rendered here.
+	// Frontmatter arrives as props. `image` is consumed by the listing (as the
+	// hover preview) and by the feed, not by this page.
 	let {
 		children,
 		title,
 		description,
 		date,
-		image
+		draft
 	}: {
 		children: import('svelte').Snippet;
 		title?: string;
 		description?: string;
 		date?: string;
-		image?: string;
+		/** Frontmatter flag. The post is dropped from every listing in a build,
+		    so the badge is only ever seen while developing. */
+		draft?: boolean;
 	} = $props();
 
 	/*
@@ -47,6 +51,27 @@
 	const others = $derived(posts.filter((_, index) => index !== current));
 
 	/*
+	 * An unquoted frontmatter date is YAML's date type, so this arrives as either
+	 * a Date or a string depending on how it was written. Normalising here means
+	 * the markup below never has to care which.
+	 */
+	const published = $derived(date ? new Date(date) : undefined);
+
+	/*
+	 * Pinned to UTC. The frontmatter names a day, not an instant, so resolving it
+	 * in the reader's timezone would shift it a day either side of the date line
+	 * and disagree with what the server rendered.
+	 */
+	const formatted = $derived(
+		published?.toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			timeZone: 'UTC'
+		})
+	);
+
+	/*
 	 * Server-rendered as the first other post so the link works with no
 	 * JavaScript, then overwritten with a real pick on mount — randomising during
 	 * render instead would make the server and client disagree about the href.
@@ -57,12 +82,22 @@
 	});
 </script>
 
-<Seo {title} {description} {image} path={page.url.pathname} type="article" publishedTime={date} />
+<!--
+	`image` is listing artwork, not a card: every post unfurls with the OG card
+	built for it at build time, so a hotlinked painting never stands in for one.
+-->
+<Seo {title} {description} path={page.url.pathname} type="article" publishedTime={date} />
 
-<EditorialPage>
+<EditorialPage masthead="p">
 	<article>
 		<div class="article-intro">
-			<h2>{title}</h2>
+			<h1>{title}{#if draft}<DraftBadge />{/if}</h1>
+			<!-- PostViews is what records the view, so it mounts whether or not it
+			     renders anything and whether or not the post carries a date. -->
+			<p class="post-meta">
+				{#if published}<time datetime={published.toISOString().slice(0, 10)}>{formatted}</time
+					>{/if}<PostViews />
+			</p>
 		</div>
 
 		<div class="prose-editorial prose max-w-none prose-neutral dark:prose-invert">
@@ -76,8 +111,7 @@
 			{/if}
 
 			<p>
-				Or, explore <a href="/{section}">the archive</a>, get updates
-				<a href="/rss.xml">via RSS</a>{#if random}, read
+				Or, get updates <a href="/rss.xml">via RSS</a>{#if random}, read
 					<a href="/{section}/{random.slug}">a random post</a>{/if}, or
 				<a href="mailto:{site.author.email}">send me an email</a>.
 			</p>
@@ -99,6 +133,14 @@
 		.post-end {
 			max-width: 50%;
 		}
+	}
+
+	/* Set below body copy and softened, so it reads as a caption to the title
+	   rather than as the first line of the post. */
+	.post-meta {
+		margin: 1rem 0 0;
+		font-size: 0.85rem;
+		color: var(--muted-foreground);
 	}
 
 	/* Reads as a post title, matching the listing and the page title above it. */

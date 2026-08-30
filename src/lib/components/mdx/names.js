@@ -26,8 +26,6 @@ export const COMPONENT_NAMES = [
 	'Caption',
 	'Steps',
 	'Step',
-	'ImageGrid',
-	'ImageGridItem',
 	'FullBleed',
 	'LinkedCard',
 	'DemoBoundary'

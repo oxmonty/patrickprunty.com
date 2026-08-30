@@ -27,8 +27,6 @@
 	export { default as Caption } from './caption.svelte';
 	export { default as Steps } from './steps.svelte';
 	export { default as Step } from './step.svelte';
-	export { default as ImageGrid } from './image-grid.svelte';
-	export { default as ImageGridItem } from './image-grid-item.svelte';
 	export { default as FullBleed } from './full-bleed.svelte';
 	export { default as LinkedCard } from './linked-card.svelte';
 	export { default as DemoBoundary } from './demo-boundary.svelte';

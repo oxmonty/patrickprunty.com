@@ -22,9 +22,7 @@
 	});
 </script>
 
-<div
-	class={cn('media-aside not-prose relative my-6 aspect-video w-full overflow-hidden', className)}
->
+<div class={cn('not-prose relative my-6 aspect-video w-full overflow-hidden', className)}>
 	{#if !loaded}
 		<Skeleton class="pointer-events-none absolute inset-0 h-full w-full" />
 	{/if}

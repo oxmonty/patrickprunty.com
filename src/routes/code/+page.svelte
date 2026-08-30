@@ -2,6 +2,7 @@
 	import EditorialPage from '$lib/components/editorial-page.svelte';
 	import EntryList from '$lib/components/entry-list.svelte';
 	import Seo from '$lib/components/seo.svelte';
+	import { pageMeta } from '$lib/config/pages';
 	import Subscribe from '$lib/components/subscribe.svelte';
 	import type { PageProps } from './$types';
 
@@ -12,15 +13,18 @@
 			href: `/code/${post.slug}`,
 			title: post.title,
 			description: post.description,
-			preview: post.image
+			preview: post.image,
+			draft: post.draft
 		}))
 	);
+
+	const meta = pageMeta('/code');
 </script>
 
-<Seo title="Code" path="/code" description="Notes on building things for the web." />
+<Seo title={meta.title} path={meta.path} description={meta.description} />
 
 <EditorialPage>
-	<EntryList tagline="Notes on building things for the web." {entries} />
+	<EntryList tagline={meta.description} {entries} />
 	<article>
 		<section class="cols">
 			<div><Subscribe /></div>

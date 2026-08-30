@@ -5,12 +5,13 @@ import { read } from '$app/server';
 import arimoMedium from '$lib/server/fonts/Arimo-Medium.ttf';
 import arimoRegular from '$lib/server/fonts/Arimo-Regular.ttf';
 import { site } from '$lib/config/site';
-import type { RequestHandler } from './$types';
 
 /**
- * Dynamic OpenGraph card, following the pattern monthy/www uses — but drawn in
- * this site's own language: paper ground, ink text, and the underline that
- * carries heading rank everywhere else here.
+ * OpenGraph card, following the pattern monthy/www uses — but drawn in this
+ * site's own language: paper ground, ink text, and the hairline frame.
+ *
+ * Rendered at build time, once per page, so satori and resvg never run in
+ * production and an unfurler is served a static PNG.
  *
  * Satori needs real font data and cannot reach the system SF Pro stack, so this
  * renders in Arimo, which is metric-compatible with the Helvetica/Arial
@@ -59,9 +60,12 @@ const [regular, medium] = await Promise.all([
 	read(arimoMedium).arrayBuffer()
 ]);
 
-export const GET: RequestHandler = async ({ url, setHeaders }) => {
-	const title = url.searchParams.get('title')?.trim() || site.name;
-	const description = url.searchParams.get('description')?.trim() || site.description;
+export async function renderOgCard(
+	rawTitle: string,
+	rawDescription: string
+): Promise<Uint8Array<ArrayBuffer>> {
+	const title = rawTitle.trim() || site.name;
+	const description = rawDescription.trim() || site.description;
 
 	const markup = {
 		type: 'div',
@@ -156,8 +160,9 @@ export const GET: RequestHandler = async ({ url, setHeaders }) => {
 
 	const png = new Resvg(svg, { fitTo: { mode: 'width', value: WIDTH } }).render().asPng();
 
-	// Each (title, description) pair is a distinct, permanent card.
-	setHeaders({ 'cache-control': 'public, max-age=604800, immutable' });
-
-	return new Response(new Uint8Array(png), { headers: { 'content-type': 'image/png' } });
-};
+	// Copied into a buffer of its own: a Node Buffer views a slice of a shared
+	// pool, and Response's body type will not take that.
+	const bytes = new Uint8Array(png.byteLength);
+	bytes.set(png);
+	return bytes;
+}

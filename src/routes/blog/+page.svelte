@@ -3,6 +3,7 @@
 	import EntryList from '$lib/components/entry-list.svelte';
 	import Subscribe from '$lib/components/subscribe.svelte';
 	import Seo from '$lib/components/seo.svelte';
+	import { pageMeta } from '$lib/config/pages';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -12,15 +13,18 @@
 			href: `/blog/${post.slug}`,
 			title: post.title,
 			description: post.description,
-			preview: post.image
+			preview: post.image,
+			draft: post.draft
 		}))
 	);
+
+	const meta = pageMeta('/blog');
 </script>
 
-<Seo title="Blog" path="/blog" description="Essays on work, life, and the occasional adventure." />
+<Seo title={meta.title} path={meta.path} description={meta.description} />
 
 <EditorialPage>
-	<EntryList tagline="Essays on work, life, and the occasional adventure." {entries} />
+	<EntryList tagline={meta.description} {entries} />
 	<article>
 		<section class="cols">
 			<div><Subscribe /></div>

@@ -65,7 +65,7 @@
 	target="_blank"
 	rel="noopener noreferrer"
 	class={cn(
-		'not-prose my-6 block overflow-hidden border border-border no-underline transition-colors hover:bg-muted/50',
+		'not-prose my-6 block overflow-hidden rounded-sm border border-border bg-white no-underline transition-colors hover:bg-muted/50',
 		className
 	)}
 >
@@ -75,7 +75,7 @@
 				src={data.image}
 				alt=""
 				loading="lazy"
-				class="aspect-[1.91/1] w-full bg-muted object-contain"
+				class="aspect-[1.91/1] w-full bg-white object-contain"
 				onerror={() => (imageFailed = true)}
 			/>
 		{/if}

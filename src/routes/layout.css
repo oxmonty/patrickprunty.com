@@ -70,16 +70,18 @@
 }
 
 /*
- * 18px root, matching staydecent.ca. Every rem in the editorial layer is sized
- * against this, so setting it on body instead would silently shrink each one by
- * 12.5% — headings at 1rem, the page title at 5rem, the 1.4rem text rhythm.
+ * Root size, a step over staydecent.ca's 18px. Every rem in the editorial layer
+ * is sized against this, so setting it on body instead would silently shrink
+ * each one — headings at 1rem, the page title at 5rem, the 1.4rem text rhythm.
+ * Raising it here scales the whole system together rather than pulling body
+ * copy out of proportion with the rhythm around it.
  *
  * Their own `max-width: 800px` step to 16px is missing its selector and never
- * applies, so the site is 18px at every width. Matched here rather than
+ * applies, so the site is one size at every width. Matched here rather than
  * reproducing a rule that does nothing.
  */
 html {
-	font-size: 18px;
+	font-size: 19px;
 }
 
 @theme inline {
@@ -135,8 +137,11 @@ html {
 }
 
 body {
-	/* Crisper text on macOS, where SF Pro renders heavy by default. */
+	/* Smoother text at the cost of some weight: SF Pro renders heavy on macOS
+	   with subpixel rendering. -moz-osx- is the Firefox-on-macOS equivalent;
+	   neither has any effect on Windows or Linux. */
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	background-color: var(--paper);
 	color: var(--ink);
 	font-family: var(--font-sans);
@@ -147,9 +152,6 @@ body {
 }
 
 .editorial {
-	/* Figures hang past the right edge by a gutter; clip that rather than let it
-	   scroll the page sideways. `clip` does not create a scroll container. */
-	overflow-x: clip;
 	margin: 0 auto;
 	padding: 1rem;
 	text-align: left;
@@ -174,7 +176,7 @@ body {
 	padding-bottom: 1rem;
 }
 
-.editorial h1 {
+.editorial .masthead {
 	font-size: 1rem;
 	font-weight: normal;
 	line-height: 1;
@@ -213,12 +215,37 @@ body {
 /*
  * One focus ring for every interactive element, keyboard only. `:where` keeps
  * it at zero specificity, so a component can still style its own focus without
- * fighting this rule. Never removed anywhere: it is the only signal a keyboard
- * user has for where they are on the page.
+ * fighting this rule. Never removed from anything a keyboard can reach: it is
+ * the only signal a keyboard user has for where they are on the page.
+ *
+ * A negative tabindex is excluded because it is not reachable by tabbing. Those
+ * are scroll targets that take focus programmatically — #content for the skip
+ * link, and whatever the browser falls back to when a dialog closes. Ringing
+ * one draws a box around the entire page, which on a phone shows up as two
+ * black bands down the edges long after the thing that focused it is gone.
  */
-:where(a, area, button, input, select, summary, textarea, [tabindex]):focus-visible {
+:where(
+	a,
+	area,
+	button,
+	input,
+	select,
+	summary,
+	textarea,
+	[tabindex]:not([tabindex^='-'])
+):focus-visible {
 	outline: 2px solid var(--ink);
 	outline-offset: 2px;
+}
+
+/*
+ * ...and no ring at all on those programmatic targets. Dropping them from the
+ * rule above only uncovers the browser's own default, which is the same box in
+ * blue. Nothing is lost: they cannot be tabbed to, so no keyboard user is ever
+ * looking for a ring here.
+ */
+:where([tabindex^='-']):focus {
+	outline: none;
 }
 
 /*
@@ -245,8 +272,22 @@ body {
 	text-decoration: underline;
 }
 
-/* The one flash of colour on the whole page. */
-.editorial a:hover {
+/*
+ * Except a self-styled block like the OG card, where the anchor wraps the whole
+ * card: the underline would otherwise run across its title, url, and
+ * description. Its own `no-underline` cannot do this alone — a Tailwind utility
+ * is one class, and the rule above is a class plus an element.
+ */
+.editorial a.not-prose {
+	text-decoration: none;
+}
+
+/*
+ * The one flash of colour on the whole page. Scoped to links in the prose run:
+ * a self-styled block like the OG card is a card, not a word in a sentence, and
+ * brings its own hover.
+ */
+.editorial a:not(.not-prose):hover {
 	background-color: var(--highlight);
 }
 
@@ -279,7 +320,7 @@ body {
 	width: 68%;
 }
 
-.editorial .article-intro h2 {
+.editorial .article-intro :is(h1, h2) {
 	font-size: 5rem;
 	margin: 0;
 	/* Tight: at 5rem the body's 1.22 leaves a gap you could park a line in. */
@@ -300,7 +341,7 @@ body {
 		padding-top: 1rem;
 	}
 
-	.editorial h1 {
+	.editorial .masthead {
 		margin-bottom: 0;
 	}
 
@@ -322,8 +363,26 @@ body {
 		width: 100%;
 	}
 
-	.editorial .article-intro h2 {
+	.editorial .article-intro :is(h1, h2) {
 		font-size: 3rem;
+	}
+}
+
+/*
+ * Figures hang past the right edge by a gutter; clip that rather than let it
+ * scroll the page sideways. `clip` does not create a scroll container.
+ *
+ * Scoped above the mobile breakpoint rather than applied unconditionally:
+ * WebKit — so every browser on iOS — skips the first paint of a sticky element
+ * inside a clipping ancestor, which left the header invisible until a scroll
+ * forced a repaint. The overflow it guards against is the `.media-aside` float,
+ * which only exists from 1024px, and the header is only sticky up to 800px, so
+ * the two never need to coexist. Same shape as deltacomponents.dev, where the
+ * sticky header has no clipping ancestor at all.
+ */
+@media screen and (min-width: 801px) {
+	.editorial {
+		overflow-x: clip;
 	}
 }
 
@@ -410,19 +469,27 @@ body {
 	}
 
 	/*
-	 * Every media kind sits in the right column: figures and component wrappers
-	 * via .media-aside, and bare media that markdown emits directly. They hang a gutter past the container's right edge —
-	 * staydecent gets that for free from two 50% grid tracks plus a 3rem gap
-	 * totalling 100% + 3rem; a contained float stops a gutter short.
+	 * Opt-in, not the default: media runs in the flow beneath the text it follows
+	 * unless it is marked as an aside, either by passing class="media-aside" to a
+	 * media component or by wrapping it in <div class="media-aside">.
+	 *
+	 * An aside hangs a gutter past the container's right edge — staydecent gets
+	 * that for free from two 50% grid tracks plus a 3rem gap totalling 100% +
+	 * 3rem; a contained float stops a gutter short.
 	 */
-	.prose-editorial :is(figure, .media-aside),
-	.prose-editorial > :is(img, video, audio) {
+	.prose-editorial .media-aside {
 		float: right;
-		/* Consecutive media stack down the right rather than side by side. */
+		/* Consecutive asides stack down the right rather than side by side. */
 		clear: right;
 		width: 50%;
 		max-width: none;
 		margin: 1.4rem calc(-1 * var(--column-gap)) 1.4rem 0;
+	}
+
+	/* A wrapped aside sizes to the float, not to the text measure. */
+	.prose-editorial .media-aside > :is(figure, img, video, audio) {
+		width: 100%;
+		max-width: none;
 	}
 
 	/* The figure is the frame, so its contents fill it. */
@@ -437,18 +504,50 @@ body {
 }
 
 /*
+ * Full-bleed media. `full-bleed-on` is added by the component once the media is
+ * known to be landscape, so a portrait image never runs to the viewport edge.
+ *
+ * Both rules start from .editorial's 1rem padding rather than the usual
+ * `left: 50%` + `-50vw` pair. Those two only cancel when the containing block is
+ * the viewport; inside the prose column they do not, which left the old version
+ * offset and shifting as the column resized. The article is laid out flush to
+ * that padding, so -1rem is exactly the distance to the viewport edge.
+ */
+@media screen and (max-width: 767px) {
+	.prose-editorial .full-bleed-on {
+		/* Column is already the viewport minus the gutter: cancel it and stop. */
+		margin-inline: -1rem;
+		width: auto;
+		max-width: none;
+	}
+}
+
+/*
+ * Desktop is a normal block in the text column unless it asks for the bleed.
+ * Here the column is a fraction of the page, so the width has to come from the
+ * viewport; .editorial clips the overshoot a scrollbar would otherwise add.
+ */
+@media screen and (min-width: 768px) {
+	.prose-editorial .full-bleed-on.full-bleed-wide {
+		margin-left: -1rem;
+		margin-right: 0;
+		width: 100vw;
+		max-width: none;
+	}
+}
+
+.prose-editorial .full-bleed :is(img, video, iframe) {
+	width: 100%;
+	height: auto;
+}
+
+/*
  * Line spacing is uniform at the site value. Tailwind Typography leaves several
  * elements looser than this — pre at 1.71, figcaption at 1.43, lead at 1.6 —
  * which read as inconsistent next to body copy inheriting 1.22.
  */
 .prose-editorial :is(p, li, ul, ol, dl, dd, blockquote, figcaption, table, th, td) {
 	line-height: 1.22;
-}
-
-/* Body copy: pretty avoids a single orphaned word on the last line. */
-.prose-editorial p,
-.prose-editorial li {
-	text-wrap: pretty;
 }
 
 .prose-editorial :not(pre) > code::before,
