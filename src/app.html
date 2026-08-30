@@ -2,7 +2,15 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<!--
+			No viewport-fit=cover. It extends the layout viewport under the browser's
+			own chrome, and Safari 26's floating toolbars then cover the top of the
+			page — the sticky header was drawn behind the URL bar until a scroll
+			collapsed it. env(safe-area-inset-top) cannot buy that strip back: it
+			reports the display's notch inset, not the toolbar's, and the toolbar
+			reaches well past it.
+		-->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
 
 		<link rel="icon" href="/favicon.ico" sizes="any" />

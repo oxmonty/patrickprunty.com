@@ -79,8 +79,7 @@
 					<a
 						href={resolve('/')}
 						rel="home"
-						aria-current={page.url.pathname === resolve('/') ? 'page' : undefined}
-						>{site.name}</a
+						aria-current={page.url.pathname === resolve('/') ? 'page' : undefined}>{site.name}</a
 					>
 				</svelte:element>
 			</div>
@@ -179,8 +178,8 @@
 	 */
 	nav[aria-label='Primary'] {
 		display: flex;
-		gap: 0.7rem;
-		/* Matches .masthead's own line-height. Inheriting .editorial's 1.22 put
+		gap: 0.55rem;
+		/* Matches .masthead's own line-height. Inheriting .editorial's 1.4 put
 		   the nav's baseline below the masthead's across the bar. */
 		line-height: 1;
 	}
@@ -240,16 +239,6 @@
 		 * than through it.
 		 */
 		.nav-bar {
-			/*
-			 * app.html sets viewport-fit=cover, which draws the page under the
-			 * status bar and dynamic island. A bar stuck at top: 0 sticks to the
-			 * layout viewport's top edge — behind them — so the inset is added
-			 * back here. The background still fills the strip; only the content
-			 * clears it. Falls back to 0px everywhere without a notch, so a
-			 * browser tab is unaffected.
-			 */
-			padding-top: calc(0.4rem + env(safe-area-inset-top, 0px));
-			padding-bottom: 0.4rem;
 			position: sticky;
 			top: 0;
 			/*
@@ -325,6 +314,9 @@
 			 */
 			position: relative;
 			top: 3px;
+			/* Above .index-menu, so the X stays visible and clickable once the
+			   panel has covered everything else in the bar. */
+			z-index: 2;
 		}
 
 		/*
@@ -361,19 +353,17 @@
 		}
 
 		.index-menu {
-			position: absolute;
-			top: 100%;
-			right: 0;
-			left: 0;
 			/*
-			 * Fills the screen below the bar. A percentage height on an absolutely
-			 * positioned box resolves against its containing block — the header —
-			 * so this is "the viewport, less the bar" without hardcoding a bar
-			 * height that padding or a font change would silently invalidate.
+			 * Fixed to the viewport, not hung off the bar: the panel covers the
+			 * whole screen including the masthead, so the menu is the only thing
+			 * on it. The summary below is lifted above this so the close control
+			 * survives the cover — without it the menu would have no way out but
+			 * the keyboard.
 			 */
-			height: calc(100dvh - 100%);
-			/* Items sit well down the panel, as in the reference: the menu reads as
-			   a page of its own rather than a tray hanging off the bar. */
+			position: fixed;
+			inset: 0;
+			z-index: 1;
+			/* Items sit well down the panel, clear of the X in the corner. */
 			padding: 5rem 1rem 1rem;
 			/* The page's own surface, so the panel reads as the site continuing
 			   rather than a mode switch. Text colour is inherited. */
@@ -391,15 +381,15 @@
 
 		/*
 		 * The site's display size, the same one the page title takes at this
-		 * width. Line height carries the spacing, so the items need no margin
-		 * between them.
+		 * width. Tight leading at that size runs the items together, so the gap
+		 * between them is set here rather than left to line-height.
 		 *
 		 * No underline: at 3rem the site's link rule becomes a heavy bar under
 		 * every word. The tap target is the whole line at this size, so nothing
 		 * is lost by dropping it here.
 		 */
 		.index-menu li + li {
-			margin-top: 0.5rem;
+			margin-top: 1.15rem;
 		}
 
 		.index-menu a {
