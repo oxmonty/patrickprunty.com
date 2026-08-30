@@ -353,6 +353,8 @@
 		}
 
 		.index-menu {
+			/* One dim step, shared by the section you are on and the press state. */
+			--index-dim: color-mix(in oklab, var(--ink) 50%, var(--paper));
 			/*
 			 * Fixed to the viewport, not hung off the bar: the panel covers the
 			 * whole screen including the masthead, so the menu is the only thing
@@ -389,22 +391,35 @@
 		 * is lost by dropping it here.
 		 */
 		.index-menu li + li {
-			margin-top: 1.15rem;
+			margin-top: 1.3rem;
 		}
 
 		.index-menu a {
 			display: block;
 			font-size: 2.25rem;
 			line-height: 1.1;
+			/*
+			 * The line is the target, but a thumb aimed at the words can still
+			 * land just outside them. The padding grows the box past the glyphs,
+			 * out to the viewport edges, and the matching negative margin keeps
+			 * that growth from spacing the items apart.
+			 */
+			margin: -0.4rem -1rem;
+			padding: 0.4rem 1rem;
+			/* :active below is the press feedback; the UA's grey slab over a
+			   target this size is not. */
+			-webkit-tap-highlight-color: transparent;
 		}
 
 		/*
 		 * The section you are already in, dimmed to 50% of the way to full ink —
 		 * around 4.2:1 on --paper, which still clears AA at this size while
-		 * sitting clearly below the items that are worth tapping.
+		 * sitting clearly below the items that are worth tapping. A press takes
+		 * the same step, so the menu answers a tap in a colour it already owns.
 		 */
-		.index-menu a[aria-current='page'] {
-			color: color-mix(in oklab, var(--ink) 50%, var(--paper));
+		.index-menu a[aria-current='page'],
+		.index-menu a:active {
+			color: var(--index-dim);
 		}
 	}
 
