@@ -179,7 +179,7 @@
 	 */
 	nav[aria-label='Primary'] {
 		display: flex;
-		gap: 1rem;
+		gap: 0.7rem;
 		/* Matches .masthead's own line-height. Inheriting .editorial's 1.22 put
 		   the nav's baseline below the masthead's across the bar. */
 		line-height: 1;
@@ -248,8 +248,8 @@
 			 * clears it. Falls back to 0px everywhere without a notch, so a
 			 * browser tab is unaffected.
 			 */
-			padding-top: calc(0.6rem + env(safe-area-inset-top, 0px));
-			padding-bottom: 0.6rem;
+			padding-top: calc(0.4rem + env(safe-area-inset-top, 0px));
+			padding-bottom: 0.4rem;
 			position: sticky;
 			top: 0;
 			/*
