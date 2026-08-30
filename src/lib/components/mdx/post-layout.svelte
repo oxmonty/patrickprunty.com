@@ -91,6 +91,18 @@
 <EditorialPage masthead="p">
 	<article>
 		<div class="article-intro">
+			<!--
+				Above the title, mirroring where the browser's own back button sits.
+				Named for its destination rather than "go back", so it is predictable
+				before the click. U+2347 mirrors the U+2348 on the subscribe button;
+				it is decorative, and aria-label carries the fuller phrasing while
+				keeping the visible word inside the accessible name.
+			-->
+			<p class="go-back">
+				<a href="/{section}" aria-label="Back to {section}"
+					><span aria-hidden="true" class="arrow">⍇</span>{section}</a
+				>
+			</p>
 			<h1>{title}{#if draft}<DraftBadge />{/if}</h1>
 			<!-- PostViews is what records the view, so it mounts whether or not it
 			     renders anything and whether or not the post carries a date. -->
@@ -117,6 +129,7 @@
 			</p>
 
 			<Subscribe />
+
 		</aside>
 	</article>
 </EditorialPage>
@@ -144,6 +157,38 @@
 	}
 
 	/* Reads as a post title, matching the listing and the page title above it. */
+	/* Caps to sit with the `Next up` heading below it, which .editorial
+	   uppercases; this is a link rather than a heading, so it takes the
+	   treatment without claiming the semantics. */
+	/*
+	 * The rule is drawn as a border rather than left to text-decoration, which
+	 * does not carry across the arrow — the same reason the listing's read-more
+	 * arrow draws its own. One continuous line under the glyph, the gap, and the
+	 * word.
+	 */
+	.go-back a {
+		text-decoration: none;
+		border-bottom: 1px solid currentColor;
+	}
+
+	/* First thing in the intro, so it takes no top margin; the gap below sets it
+	   off from the title. */
+	.go-back {
+		margin-top: 0;
+		/* Space rather than a muted colour to set it back from the title: the
+		   editorial layer builds hierarchy from whitespace, and dimming it would
+		   work against a link whose whole job is being easy to find. */
+		margin-bottom: 3rem;
+		text-transform: uppercase;
+	}
+
+	/* Mirrors subscribe's own .arrow, with the margin on the other side since the
+	   glyph leads here rather than trails. */
+	.arrow {
+		display: inline-block;
+		margin-right: 0.35em;
+	}
+
 	.next-title {
 		font-weight: 500;
 		text-transform: uppercase;
