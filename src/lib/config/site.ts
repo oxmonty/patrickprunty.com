@@ -26,14 +26,16 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Biscuit',
-		image: '/projects/biscuit.svg',
+		video: '/projects/biscuit.mp4',
+		image: '/projects/biscuit-poster.jpg',
 		url: 'https://github.com/oxmonty/biscuit',
 		description:
 			'Biscuit generates production-ready CLI repositories from OpenAPI specs. Every CLI is also an MCP server and chat TUI. Open source, in Go'
 	},
 	{
 		name: 'Delta Components',
-		image: '/projects/delta.svg',
+		video: '/projects/delta-demo.mp4',
+		image: '/projects/delta-poster.jpg',
 		url: 'https://deltacomponents.dev',
 		description:
 			'High-performance components registry built on top of shadcn/ui. From AI chat interfaces to interactive media. Copy, paste, and own the code'
@@ -41,14 +43,15 @@ const projects: Project[] = [
 	{
 		name: 'Jigsaw Presents',
 		draft: true,
-		image: '/projects/jigsaw.svg',
+		image: '/projects/jigsaw-presents.webp',
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		description: 'Video essays exploring trending films, television, gaming, and music'
 	},
 	{
 		name: 'Lotso',
 		// TODO: replace the placeholder description and url with your own copy.
-		image: '/projects/lotso.svg',
+		video: '/projects/lotso.mp4',
+		image: '/projects/lotso-poster.jpg',
 		url: 'https://x.com/konstipaulus/status/2066534707496444317',
 		description: 'TODO: one-line description of Lotso'
 	},
