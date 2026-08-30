@@ -93,17 +93,20 @@
 		<div class="article-intro">
 			<!--
 				Above the title, mirroring where the browser's own back button sits.
-				Named for its destination rather than "go back", so it is predictable
-				before the click. U+2347 mirrors the U+2348 on the subscribe button;
-				it is decorative, and aria-label carries the fuller phrasing while
-				keeping the visible word inside the accessible name.
+				U+2347 mirrors the U+2348 on the subscribe button and is decorative;
+				the aria-label names the destination the visible words leave out, and
+				keeps them inside the accessible name as WCAG requires.
 			-->
-			<p class="go-back">
-				<a href="/{section}" aria-label="Back to {section}"
-					><span aria-hidden="true" class="arrow">⍇</span>{section}</a
-				>
-			</p>
-			<h1>{title}{#if draft}<DraftBadge />{/if}</h1>
+			{#if site.show.postBackLink}
+				<p class="go-back">
+					<a href="/{section}" aria-label="Go back to {section}"
+						><span aria-hidden="true" class="arrow">⍇</span>Go back</a
+					>
+				</p>
+			{/if}
+			<h1>
+				{title}{#if draft}<DraftBadge />{/if}
+			</h1>
 			<!-- PostViews is what records the view, so it mounts whether or not it
 			     renders anything and whether or not the post carries a date. -->
 			<p class="post-meta">
@@ -120,6 +123,9 @@
 			{#if next}
 				<h3>Next up</h3>
 				<p class="next-title"><a href="/{section}/{next.slug}">{next.title}</a></p>
+				{#if next.description}
+					<p class="next-description">{next.description}</p>
+				{/if}
 			{/if}
 
 			<p>
@@ -129,7 +135,6 @@
 			</p>
 
 			<Subscribe />
-
 		</aside>
 	</article>
 </EditorialPage>
@@ -153,13 +158,9 @@
 	.post-meta {
 		margin: 1rem 0 0;
 		font-size: 0.85rem;
-		color: var(--muted-foreground);
+		color: var(--ink-muted);
 	}
 
-	/* Reads as a post title, matching the listing and the page title above it. */
-	/* Caps to sit with the `Next up` heading below it, which .editorial
-	   uppercases; this is a link rather than a heading, so it takes the
-	   treatment without claiming the semantics. */
 	/*
 	 * The rule is drawn as a border rather than left to text-decoration, which
 	 * does not carry across the arrow — the same reason the listing's read-more
@@ -189,9 +190,17 @@
 		margin-right: 0.35em;
 	}
 
+	/* Reads as a post title, matching the listing and the page title above it. */
 	.next-title {
 		font-weight: 500;
 		text-transform: uppercase;
+	}
+
+	/* Sits with its title rather than a paragraph's distance from it — the two
+	   are one entry, the same pairing the listing uses. */
+	.next-description {
+		margin-top: 0.4rem;
+		color: var(--ink-muted);
 	}
 
 	/* The chrome h3 rule still underlines; post headings dropped that. */

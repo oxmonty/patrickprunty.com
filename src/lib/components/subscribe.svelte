@@ -118,11 +118,9 @@
 		text-transform: lowercase;
 	}
 
-	/* A prompt, not content: mixed back toward the paper so it sits under the
-	   text the reader types over it. 58% is as light as it goes and still clears
-	   4.5:1 against the paper — placeholder text counts for contrast. */
+	/* A prompt, not content: sits under the text the reader types over it. */
 	input::placeholder {
-		color: color-mix(in srgb, var(--ink) 58%, var(--paper));
+		color: var(--ink-muted);
 	}
 
 	button {

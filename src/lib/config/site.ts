@@ -115,7 +115,9 @@ export const site = {
 		/** The view count beside a post's date. */
 		postViews: false,
 		/** The footer's last-visitor location and unique visitor total. */
-		visitors: false
+		visitors: false,
+		/** The `Go back` link above a post's title. */
+		postBackLink: false
 	},
 	relatedSites: [
 		'deltacomponents.dev',
