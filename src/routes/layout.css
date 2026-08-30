@@ -163,7 +163,8 @@ body {
 	margin: 0 auto;
 	padding: 1rem;
 	text-align: left;
-	line-height: 1.4;
+	/* Tailwind's leading-snug. */
+	line-height: 1.375;
 	/* Full viewport height with the footer as the auto-margin item, so a short
 	   page still puts the footer on the bottom edge rather than mid-screen. */
 	display: flex;
@@ -331,7 +332,7 @@ body {
 .editorial .article-intro :is(h1, h2) {
 	font-size: 5rem;
 	margin: 0;
-	/* Tight: at 5rem the body's 1.4 leaves a gap you could park a line in. */
+	/* Tight: at 5rem the body's 1.375 leaves a gap you could park a line in. */
 	line-height: 0.95;
 	text-transform: uppercase;
 	/* The page title carries its own rank at 5rem; the rule the smaller headings
@@ -440,7 +441,7 @@ body {
 	/* Caps open up at this size, so a touch of tracking keeps them from
 	   crowding; without it uppercase reads tighter than the lowercase around it. */
 	letter-spacing: 0.02em;
-	line-height: 1.4;
+	line-height: 1.375;
 	/* Same rhythm as body copy: adjacent margins collapse, so a heading sits in
 	   the paragraph flow rather than announcing itself with space. */
 	margin-top: 1.4rem;
@@ -552,10 +553,10 @@ body {
 /*
  * Line spacing is uniform at the site value. Tailwind Typography leaves several
  * elements looser than this — pre at 1.71, figcaption at 1.43, lead at 1.6 —
- * which read as inconsistent next to body copy inheriting 1.4.
+ * which read as inconsistent next to body copy inheriting 1.375.
  */
 .prose-editorial :is(p, li, ul, ol, dl, dd, blockquote, figcaption, table, th, td) {
-	line-height: 1.4;
+	line-height: 1.375;
 }
 
 .prose-editorial :not(pre) > code::before,

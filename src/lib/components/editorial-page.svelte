@@ -179,7 +179,7 @@
 	nav[aria-label='Primary'] {
 		display: flex;
 		gap: 0.55rem;
-		/* Matches .masthead's own line-height. Inheriting .editorial's 1.4 put
+		/* Matches .masthead's own line-height. Inheriting .editorial's 1.375 put
 		   the nav's baseline below the masthead's across the bar. */
 		line-height: 1;
 	}
