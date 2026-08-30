@@ -110,7 +110,7 @@
 					>{#if entry.draft}<DraftBadge />{/if}
 				</h3>
 
-				<p class="entry-description">
+				<p>
 					{entry.description}
 					<a
 						href={entry.href}
@@ -255,17 +255,6 @@
 		margin-left: 0.1em;
 		font-size: 0.85em;
 		vertical-align: 0.06em;
-	}
-
-	/* Secondary to the title above it, at the site's one muted step. */
-	.entry-description {
-		color: var(--ink-muted);
-	}
-
-	/* The continue-reading link stays at full strength — it is the action in the
-	   entry, not part of the description it trails. */
-	.entry-description a {
-		color: var(--ink);
 	}
 
 	.read-more {

@@ -31,9 +31,11 @@
 	--ink: #0a0a0a;
 	--ink-visited: #413d44;
 	/*
-	 * One muted step for secondary text — placeholders, captions, descriptions.
-	 * 58% is as light as it goes and still clears 4.5:1 against --paper, which
-	 * placeholder text also has to meet.
+	 * One muted step, for chrome rather than content: placeholders and the meta
+	 * line beside a title. Descriptions and body copy stay at full ink — they
+	 * are what the reader came for, and the system already ranks them by weight,
+	 * underline, and whitespace. 58% is as light as it goes and still clears
+	 * 4.5:1 against --paper, which placeholder text also has to meet.
 	 */
 	--ink-muted: color-mix(in srgb, var(--ink) 58%, var(--paper));
 	--rule: #d7d2bf;

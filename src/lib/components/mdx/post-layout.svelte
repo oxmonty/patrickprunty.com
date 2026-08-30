@@ -200,7 +200,6 @@
 	   are one entry, the same pairing the listing uses. */
 	.next-description {
 		margin-top: 0.4rem;
-		color: var(--ink-muted);
 	}
 
 	/* The chrome h3 rule still underlines; post headings dropped that. */
