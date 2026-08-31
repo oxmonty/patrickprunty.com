@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
 
 import tailwindcss from '@tailwindcss/vite';
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { mdsvex } from 'mdsvex';
 import { defineConfig } from 'vite';
@@ -47,13 +47,16 @@ export default defineConfig({
 				}
 			},
 
-			// Node rather than adapter-auto: `read` from $app/server, which the OG
-			// route uses to load its font files, needs an adapter that can state
-			// whether the target supports it. Build output runs with `node build`.
-			// Node rather than adapter-auto: `read` from $app/server, which the OG
-			// route uses for its font files, needs an adapter that knows whether the
-			// target supports it. Run the output with `node build`.
-			adapter: adapter()
+			// Vercel, which is where this deploys. adapter-node emits a server you
+			// start yourself, so Vercel found nothing to serve and answered every
+			// path with its own 404. The OG cards are prerendered, so the `read`
+			// they use from $app/server runs at build time and needs nothing of the
+			// adapter at runtime.
+			// Pinned rather than inferred: the adapter reads the runtime from the
+			// Node running the build, which fails outright on a version it does not
+			// recognise — a local toolchain bump should not be able to break the
+			// deploy.
+			adapter: adapter({ runtime: 'nodejs22.x' })
 		})
 	]
 });
