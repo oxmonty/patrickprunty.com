@@ -1,6 +1,6 @@
 import { env } from '$env/dynamic/public';
 
-const url = env.PUBLIC_SITE_URL || 'https://patrickprunty.com';
+const url = env.PUBLIC_SITE_URL || __SITE_URL__;
 
 export interface Project {
 	name: string;

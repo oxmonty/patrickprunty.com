@@ -28,8 +28,31 @@ const gitHash = (
 	})()
 ).slice(0, 7);
 
+/**
+ * Canonical origin, for the values that must name one domain however the site
+ * was reached: the canonical link, og:url, the sitemap, and the RSS guids.
+ *
+ * Deliberately not the request's own origin, and not VERCEL_URL — both differ
+ * per deployment, so every preview would self-canonicalise and the feed's guids
+ * would churn on each push. VERCEL_PROJECT_PRODUCTION_URL names the production
+ * domain even from a preview, which is the one that belongs in those tags. It
+ * carries no scheme.
+ *
+ * PUBLIC_SITE_URL still overrides at runtime; this is only the fallback under
+ * it, so an unset environment still gets the real domain rather than a literal
+ * that goes stale.
+ */
+const siteUrl =
+	process.env.PUBLIC_SITE_URL ||
+	(process.env.VERCEL_PROJECT_PRODUCTION_URL &&
+		`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
+	'https://patrickprunty.com';
+
 export default defineConfig({
-	define: { __GIT_HASH__: JSON.stringify(gitHash) },
+	define: {
+		__GIT_HASH__: JSON.stringify(gitHash),
+		__SITE_URL__: JSON.stringify(siteUrl)
+	},
 	plugins: [
 		tailwindcss(),
 		sveltekit({

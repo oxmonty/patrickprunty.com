@@ -11,6 +11,9 @@ declare global {
 
 	/** Injected by vite.config.ts: the short SHA the site was built from. */
 	const __GIT_HASH__: string;
+
+	/** Injected by vite.config.ts: the canonical origin, resolved at build time. */
+	const __SITE_URL__: string;
 }
 
 export {};
