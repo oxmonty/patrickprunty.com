@@ -8,7 +8,9 @@ import { site } from '$lib/config/site';
 
 /**
  * OpenGraph card, following the pattern monthy/www uses — but drawn in this
- * site's own language: paper ground, ink text, and the hairline frame.
+ * site's own language inverted: ink ground, paper text, and the hairline frame.
+ * A share card sits in someone else's feed rather than on the site, so it reads
+ * as a plate of the site instead of a continuation of the page.
  *
  * Rendered at build time, once per page, so satori and resvg never run in
  * production and an unfurler is served a static PNG.
@@ -25,9 +27,10 @@ const HEIGHT = 630;
 const FRAME_INSET = 64;
 
 /**
- * The inset frame from monthy/www's card, drawn in --rule rather than ink so it
- * reads as the page's hairline instead of competing with the title. Absolute,
- * so it never enters the content flow.
+ * The inset frame from monthy/www's card, kept a hairline rather than competing
+ * with the title — lifted off the ground far enough to read on ink, where the
+ * paper card's darker rule would disappear. Absolute, so it never enters the
+ * content flow.
  */
 const frame = [
 	{ top: 0, bottom: 0, left: FRAME_INSET, width: 1 },
@@ -40,7 +43,7 @@ const frame = [
 		style: {
 			position: 'absolute',
 			display: 'flex',
-			backgroundColor: '#413d44',
+			backgroundColor: '#4a4a4a',
 			...rule
 		}
 	}
@@ -76,9 +79,9 @@ export async function renderOgCard(
 				display: 'flex',
 				flexDirection: 'column',
 				justifyContent: 'space-between',
-				// --paper, the ground the site itself sits on.
-				backgroundColor: '#fafafa',
-				color: '#0a0a0a',
+				// Inverted against the site: --ink ground, --paper text.
+				backgroundColor: '#0a0a0a',
+				color: '#fafafa',
 				padding: '104px 112px',
 				fontFamily: 'Arimo',
 				position: 'relative'
@@ -119,7 +122,9 @@ export async function renderOgCard(
 										marginTop: 40,
 										fontSize: 32,
 										lineHeight: 1.35,
-										color: '#413d44'
+										// The muted step mirrored onto ink — 58% of the way to paper,
+										// which holds ~6.8:1 against the ground.
+										color: '#959595'
 									},
 									children: description
 								}
@@ -140,8 +145,7 @@ export async function renderOgCard(
 							display: 'flex',
 							width: 48,
 							height: 48,
-							backgroundColor: '#3f3',
-							border: '2px solid #0a0a0a'
+							backgroundColor: '#3f3'
 						}
 					}
 				}
