@@ -301,8 +301,7 @@ body {
 }
 
 .editorial img {
-	content-visibility: auto;
-	max-height: calc(100vh - 2rem);
+	max-height: calc(100dvh - 2rem);
 	max-width: 100%;
 }
 
@@ -522,7 +521,7 @@ body {
  * offset and shifting as the column resized. The article is laid out flush to
  * that padding, so -1rem is exactly the distance to the viewport edge.
  */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 800px) {
 	.prose-editorial .full-bleed-on {
 		/* Column is already the viewport minus the gutter: cancel it and stop. */
 		margin-inline: -1rem;
@@ -535,8 +534,13 @@ body {
  * Desktop is a normal block in the text column unless it asks for the bleed.
  * Here the column is a fraction of the page, so the width has to come from the
  * viewport; .editorial clips the overshoot a scrollbar would otherwise add.
+ *
+ * 801px, not 768px: that clip is itself scoped to 801px and up, because a
+ * clipping ancestor costs a sticky element its first paint on iOS. Bleeding to
+ * 100vw in the 768-800px band would therefore have nothing to clip it, and the
+ * overshoot would scroll the page sideways.
  */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 801px) {
 	.prose-editorial .full-bleed-on.full-bleed-wide {
 		margin-left: -1rem;
 		margin-right: 0;
