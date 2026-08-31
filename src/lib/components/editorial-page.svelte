@@ -239,14 +239,31 @@
 
 	@media screen and (max-width: 800px) {
 		/*
-		 * Sticky on mobile only: on a phone the nav is otherwise a scroll back to
+		 * Pinned on mobile only: on a phone the nav is otherwise a scroll back to
 		 * the top, while on desktop it stays in view long enough not to need it.
 		 * The bar carries its own background so content passes behind it rather
 		 * than through it.
+		 *
+		 * Fixed rather than sticky. WebKit maintains a sticky element's offset on
+		 * the scrolling thread, and the page's own content arriving is a large
+		 * enough paint to leave that offset stale — the bar was drawn off-screen
+		 * from then until the first real scroll resynced it, which is why any
+		 * scroll fixed it and why it then stayed fixed at every offset including
+		 * zero. Fixed needs no such sync. This bar has now cost three separate
+		 * iOS bugs as a sticky element; the other two are recorded in layout.css's
+		 * clip guard and app.html's viewport comment.
+		 *
+		 * Spanning the viewport with left/right rather than the old negative
+		 * margin also drops a workaround: the bar's background has to reach the
+		 * screen edges, past .editorial's 1rem gutter, because full-bleed media
+		 * cancels that gutter and would otherwise scroll past the bar in the strip
+		 * down each side.
 		 */
 		.nav-bar {
-			position: sticky;
+			position: fixed;
 			top: 0;
+			left: 0;
+			right: 0;
 			/*
 			 * Above the page-content band, which sits at 10: the code block's copy
 			 * button and the listing's cursor preview both stack there, and a tie
@@ -255,13 +272,11 @@
 			 */
 			z-index: 20;
 			/*
-			 * Full-viewport background, not just the content box. .editorial pads
-			 * the page by 1rem, but full-bleed media cancels that padding to reach
-			 * the viewport edge — so a bar backgrounded only to its own box let the
-			 * image scroll past in the 1rem strip down each side. The padding puts
-			 * the content back where the margin took it.
+			 * Set, not measured. Taking the bar out of flow means .editorial has to
+			 * reserve the same height above its content, and one variable driving
+			 * both is the only way the two cannot drift apart.
 			 */
-			margin-inline: -1rem;
+			height: var(--nav-h);
 			padding-inline: 1rem;
 			background-color: var(--paper);
 		}

@@ -64,6 +64,15 @@
 	--code-block-bg-hover: #232323;
 	--gutter: 16px;
 	--gutter-lg: 64px;
+
+	/*
+	 * The mobile nav bar's height. It is fixed at that width, so .editorial has
+	 * to reserve this much above its content — both read it from here so they
+	 * cannot drift. 2.7rem is the height the bar laid out at as a flow element,
+	 * so the change is invisible; in rem so it still tracks the reader's text
+	 * size. Unused above 800px, where the bar is an ordinary block.
+	 */
+	--nav-h: 2.7rem;
 }
 
 .dark {
@@ -345,6 +354,15 @@ body {
 }
 
 @media screen and (max-width: 800px) {
+	/*
+	 * The room the fixed nav bar no longer takes in flow, on top of the page's
+	 * own 1rem gutter. Scoped with :has so the error page, which is .editorial
+	 * without a bar, does not open a gap where no bar is coming.
+	 */
+	.editorial:has(.nav-bar) {
+		padding-top: calc(1rem + var(--nav-h));
+	}
+
 	.editorial article {
 		padding-top: 1rem;
 	}
