@@ -58,7 +58,7 @@
 			</div>
 
 			<div class="mobile-first">
-				<img src="/icon.webp" alt="Patrick Prunty" />
+				<img src="/portrait.svg" alt="Patrick Prunty" width="675" height="675" />
 			</div>
 		</section>
 	</article>
