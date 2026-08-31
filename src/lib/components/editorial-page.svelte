@@ -71,7 +71,13 @@
 
 <a class="skip-link" href="#content">Skip to content</a>
 
-<main class="editorial">
+<!--
+	A plain wrapper, not <main>. <header> only carries the banner role, and
+	<footer> contentinfo, while they sit outside main and the sectioning
+	elements — nesting them inside dropped both from the landmark list. main is
+	the page's own content below, which is what the element is for.
+-->
+<div class="editorial">
 	<header class="nav-bar">
 		<section class="cols">
 			<div>
@@ -107,9 +113,9 @@
 					-->
 					<summary class="nav-index" aria-label="Index">
 						{#if indexOpen}
-							<X size={30} strokeWidth={1.5} aria-hidden="true" />
+							<X size={30} strokeWidth={2} aria-hidden="true" />
 						{:else}
-							<Menu size={30} strokeWidth={1.5} aria-hidden="true" />
+							<Menu size={30} strokeWidth={2} aria-hidden="true" />
 						{/if}
 					</summary>
 					<div class="index-menu">
@@ -128,9 +134,9 @@
 	</header>
 
 	<!-- tabindex="-1" so the skip link moves focus here, not just the scroll. -->
-	<div id="content" tabindex="-1" inert={indexOpen}>
+	<main id="content" tabindex="-1" inert={indexOpen}>
 		{@render children()}
-	</div>
+	</main>
 
 	<footer inert={indexOpen}>
 		<section class="cols">
@@ -161,7 +167,7 @@
 			</div>
 		</section>
 	</footer>
-</main>
+</div>
 
 <style>
 	.nav-bar {
@@ -317,6 +323,24 @@
 			/* Above .index-menu, so the X stays visible and clickable once the
 			   panel has covered everything else in the bar. */
 			z-index: 2;
+			/* :active below is the press feedback; the UA's grey slab is not. */
+			-webkit-tap-highlight-color: transparent;
+			/*
+			 * The padding is tap target, not surface: it takes the 30px glyph to a
+			 * 56px touch box, and clipping the background to the content box keeps
+			 * the press fill on the icon rather than painting the whole target.
+			 */
+			background-clip: content-box;
+		}
+
+		/*
+		 * The site's one flash of colour, on the control that opens the menu:
+		 * the same highlight a link takes on hover, here on press, because touch
+		 * has no hover to give it. It fills the padded box rather than the glyph
+		 * — the box is the tap target, so it is what the reader hit.
+		 */
+		.index summary:active {
+			background-color: var(--highlight);
 		}
 
 		/*
@@ -353,8 +377,6 @@
 		}
 
 		.index-menu {
-			/* One dim step, shared by the section you are on and the press state. */
-			--index-dim: color-mix(in oklab, var(--ink) 50%, var(--paper));
 			/*
 			 * Fixed to the viewport, not hung off the bar: the panel covers the
 			 * whole screen including the masthead, so the menu is the only thing
@@ -391,7 +413,7 @@
 		 * is lost by dropping it here.
 		 */
 		.index-menu li + li {
-			margin-top: 1.3rem;
+			margin-top: 1.2rem;
 		}
 
 		.index-menu a {
@@ -414,12 +436,21 @@
 		/*
 		 * The section you are already in, dimmed to 50% of the way to full ink —
 		 * around 4.2:1 on --paper, which still clears AA at this size while
-		 * sitting clearly below the items that are worth tapping. A press takes
-		 * the same step, so the menu answers a tap in a colour it already owns.
+		 * sitting clearly below the items that are worth tapping.
 		 */
-		.index-menu a[aria-current='page'],
+		.index-menu a[aria-current='page'] {
+			color: color-mix(in oklab, var(--ink) 50%, var(--paper));
+		}
+
+		/*
+		 * A press takes the site's one flash of colour, the same highlight a link
+		 * shows on hover — here on press, because touch has no hover to give it.
+		 * Ink is restored with it, so the section you are already in lights up
+		 * like any other rather than staying dimmed under the green.
+		 */
 		.index-menu a:active {
-			color: var(--index-dim);
+			background-color: var(--highlight);
+			color: var(--ink);
 		}
 	}
 
