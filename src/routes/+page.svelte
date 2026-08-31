@@ -58,7 +58,13 @@
 			</div>
 
 			<div class="mobile-first">
-				<img src="/portrait.svg" alt="Patrick Prunty" width="675" height="675" />
+				<img
+					src="/portrait.svg"
+					alt="Patrick Prunty"
+					width="675"
+					height="675"
+					fetchpriority="high"
+				/>
 			</div>
 		</section>
 	</article>
