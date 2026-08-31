@@ -32,7 +32,7 @@
 <style>
 	.not-found {
 		display: flex;
-		min-height: 100dvh;
+		min-height: 100svh;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;

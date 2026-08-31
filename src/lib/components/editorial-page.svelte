@@ -5,6 +5,8 @@
 	import Menu from '@lucide/svelte/icons/equal';
 	import X from '@lucide/svelte/icons/x';
 
+	import { onMount } from 'svelte';
+
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
@@ -32,6 +34,33 @@
 	let indexOpen = $state(false);
 	afterNavigate(() => {
 		indexOpen = false;
+	});
+
+	/*
+	 * Chrome for iOS enters a page from a link with the top of the layout
+	 * viewport still behind its own toolbar, and only reconciles the two when
+	 * the reader scrolls — which is exactly the reported symptom: the bar was
+	 * missing until any scroll, in either direction, and stayed right from then
+	 * on. Nothing in the page moves; a Blink layout-shift trace and an on-device
+	 * Safari trace both measured zero. So the layout was never the problem, and
+	 * neither sticky nor fixed positioning could have fixed it.
+	 *
+	 * This performs that reconciliation once, on the reader's behalf. It waits
+	 * for load because the toolbar state only goes stale once the page's own
+	 * content has painted, and it declines to touch a page the reader did not
+	 * arrive at the top of — a deep link, or a restored scroll position, is
+	 * already where it should be.
+	 */
+	onMount(() => {
+		if (location.hash || scrollY !== 0) return;
+
+		const reconcile = () => {
+			scrollTo({ top: 1, behavior: 'instant' });
+			requestAnimationFrame(() => scrollTo({ top: 0, behavior: 'instant' }));
+		};
+
+		if (document.readyState === 'complete') reconcile();
+		else addEventListener('load', reconcile, { once: true });
 	});
 
 	const FOUNDED = 2024;

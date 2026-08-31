@@ -174,11 +174,20 @@ body {
 	text-align: left;
 	/* Tailwind's leading-snug. */
 	line-height: 1.375;
-	/* Full viewport height with the footer as the auto-margin item, so a short
-	   page still puts the footer on the bottom edge rather than mid-screen. */
+	/*
+	 * Full viewport height with the footer as the auto-margin item, so a short
+	 * page still puts the footer on the bottom edge rather than mid-screen.
+	 *
+	 * svh, not dvh. dvh tracks the browser's chrome as it collapses, so it is
+	 * the one length on the page that changes whenever an iOS toolbar moves —
+	 * relaying the page out against a viewport that is mid-animation. svh is
+	 * the constant short measure, which only ever leaves the footer lower than
+	 * the fold on a short page, and deltacomponents.dev sizes the same wrapper
+	 * the same way.
+	 */
 	display: flex;
 	flex-direction: column;
-	min-height: 100dvh;
+	min-height: 100svh;
 }
 
 .editorial header,
