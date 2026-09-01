@@ -133,7 +133,7 @@ export const site = {
 	},
 	relatedSites: [
 		'deltacomponents.dev',
-		'monthy.ai',
+		'monty.so',
 		'x.com/pprunty_',
 		'github.com/pprunty',
 		'linkedin.com/in/patrickprunty',
