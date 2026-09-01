@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Placeholder">
-	<rect width="1600" height="1000" fill="#ededed" />
-	<g stroke="#d7d2bf" stroke-width="4" fill="none">
-		<line x1="0" y1="0" x2="1600" y2="1000" />
-		<line x1="1600" y1="0" x2="0" y2="1000" />
-	</g>
-</svg>
