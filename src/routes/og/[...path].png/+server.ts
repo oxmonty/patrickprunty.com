@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 
 import { PAGES } from '$lib/config/pages';
 import { site } from '$lib/config/site';
-import { toPosts, type PostFrontmatter } from '$lib/posts';
+import { toPosts, type PostIndex } from '$lib/posts';
 import { renderOgCard } from '$lib/server/og-card';
 import type { EntryGenerator, RequestHandler } from './$types';
 
@@ -19,16 +19,20 @@ import type { EntryGenerator, RequestHandler } from './$types';
  */
 export const prerender = true;
 
-type PostModules = Record<string, { metadata?: PostFrontmatter }>;
-
 const SECTIONS = [
 	{
 		section: 'blog',
-		modules: import.meta.glob('../../blog/*/+page.md', { eager: true }) as PostModules
+		modules: import.meta.glob('../../blog/*/+page.md', {
+			eager: true,
+			import: 'metadata'
+		}) as PostIndex
 	},
 	{
 		section: 'code',
-		modules: import.meta.glob('../../code/*/+page.md', { eager: true }) as PostModules
+		modules: import.meta.glob('../../code/*/+page.md', {
+			eager: true,
+			import: 'metadata'
+		}) as PostIndex
 	}
 ];
 

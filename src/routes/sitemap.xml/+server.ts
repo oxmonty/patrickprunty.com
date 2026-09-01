@@ -1,4 +1,4 @@
-import { toPosts, type PostFrontmatter } from '$lib/posts';
+import { toPosts, type PostIndex } from '$lib/posts';
 import { absoluteUrl } from '$lib/seo';
 import type { RequestHandler } from './$types';
 
@@ -8,18 +8,22 @@ import type { RequestHandler } from './$types';
  */
 export const prerender = true;
 
-type PostModules = Record<string, { metadata?: PostFrontmatter }>;
-
 const PAGES = ['/', '/blog', '/code', '/projects'];
 
 const SECTIONS = [
 	{
 		section: 'blog',
-		modules: import.meta.glob('../blog/*/+page.md', { eager: true }) as PostModules
+		modules: import.meta.glob('../blog/*/+page.md', {
+			eager: true,
+			import: 'metadata'
+		}) as PostIndex
 	},
 	{
 		section: 'code',
-		modules: import.meta.glob('../code/*/+page.md', { eager: true }) as PostModules
+		modules: import.meta.glob('../code/*/+page.md', {
+			eager: true,
+			import: 'metadata'
+		}) as PostIndex
 	}
 ];
 

@@ -19,38 +19,37 @@ export interface Post {
 	draft?: boolean;
 }
 
-type PostModules = Record<string, { metadata?: PostFrontmatter }>;
+/**
+ * What `import.meta.glob('<pattern>', { eager: true, import: 'metadata' })`
+ * returns: each post's frontmatter, keyed by file path.
+ *
+ * The `import` option is what keeps this cheap. Without it the glob pulls in
+ * every post's compiled component, so a listing route that only needs titles
+ * ships every body it lists — including the drafts it then filters out.
+ */
+export type PostIndex = Record<string, PostFrontmatter | undefined>;
 
 /**
- * Normalises an `import.meta.glob('./<em>/+page.md', { eager: true })` result into
- * a sorted post list.
+ * Normalises a post index into a sorted post list.
  *
  * The glob itself has to stay in each route — Vite requires a literal pattern
  * it can statically analyse — so only the shaping is shared.
  */
-export function toPosts(modules: PostModules): Post[] {
+export function toPosts(index: PostIndex): Post[] {
 	return (
-		Object.entries(modules)
-			.map(([path, module]) => ({
+		Object.entries(index)
+			.map(([path, frontmatter]) => ({
 				// The directory the file sits in, so the same helper serves a route's own
 				// './<slug>/+page.md' glob and a cross-route '../blog/<slug>/+page.md' one.
 				slug: path.split('/').at(-2) ?? '',
-				title: module.metadata?.title ?? 'Untitled',
-				description: module.metadata?.description ?? '',
-				date: module.metadata?.date ?? '',
-				image: module.metadata?.image,
-				draft: module.metadata?.draft ?? false
+				title: frontmatter?.title ?? 'Untitled',
+				description: frontmatter?.description ?? '',
+				date: frontmatter?.date ?? '',
+				image: frontmatter?.image,
+				draft: frontmatter?.draft ?? false
 			}))
 			// Drafts stay visible while developing so they can be read in the listing.
 			.filter((post) => dev || !post.draft)
 			.sort((a, b) => b.date.localeCompare(a.date))
-			.map(({ slug, title, description, date, image, draft }) => ({
-				slug,
-				title,
-				description,
-				date,
-				image,
-				draft
-			}))
 	);
 }

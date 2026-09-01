@@ -1,5 +1,5 @@
 import { buildRssFeed, type FeedItem } from '$lib/rss';
-import { toPosts, type PostFrontmatter } from '$lib/posts';
+import { toPosts, type PostIndex } from '$lib/posts';
 import type { RequestHandler } from './$types';
 
 /**
@@ -10,18 +10,22 @@ import type { RequestHandler } from './$types';
  */
 export const prerender = true;
 
-type PostModules = Record<string, { metadata?: PostFrontmatter }>;
-
 const SECTIONS = [
 	{
 		section: 'blog',
 		category: 'Blog',
-		modules: import.meta.glob('../blog/*/+page.md', { eager: true }) as PostModules
+		modules: import.meta.glob('../blog/*/+page.md', {
+			eager: true,
+			import: 'metadata'
+		}) as PostIndex
 	},
 	{
 		section: 'code',
 		category: 'Code',
-		modules: import.meta.glob('../code/*/+page.md', { eager: true }) as PostModules
+		modules: import.meta.glob('../code/*/+page.md', {
+			eager: true,
+			import: 'metadata'
+		}) as PostIndex
 	}
 ];
 
