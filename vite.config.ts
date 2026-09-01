@@ -7,6 +7,7 @@ import { mdsvex } from 'mdsvex';
 import { defineConfig } from 'vite';
 
 import mdsvexConfig from './mdsvex.config.js';
+import { checkOgImages } from './src/lib/mdx/check-og-images.js';
 import { injectMdxComponents } from './src/lib/mdx/inject-components.js';
 
 /**
@@ -54,6 +55,7 @@ export default defineConfig({
 		__SITE_URL__: JSON.stringify(siteUrl)
 	},
 	plugins: [
+		checkOgImages(),
 		tailwindcss(),
 		sveltekit({
 			extensions: ['.svelte', ...(mdsvexConfig.extensions ?? ['.md'])],
