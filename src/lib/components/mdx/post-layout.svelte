@@ -8,6 +8,10 @@
 </script>
 
 <script lang="ts">
+	// rehype-katex renders $…$ to static KaTeX HTML at build time, so posts
+	// need this stylesheet even though no component imports katex. Scoped here
+	// rather than the root layout so non-post routes do not pay for it.
+	import 'katex/dist/katex.min.css';
 	import { page } from '$app/state';
 
 	import DraftBadge from '$lib/components/draft-badge.svelte';

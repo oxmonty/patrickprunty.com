@@ -7,8 +7,10 @@
  * this injects the import ahead of mdsvex rather than asking every author (and
  * remark-auto-embed, which has no way to add imports) to do it by hand.
  *
- * Unreferenced components are dropped by Rollup in the production build, so the
- * blanket import costs nothing at runtime.
+ * Rollup drops unreferenced components from the production build, but only when
+ * nothing in them has a side effect — a component with a top-level CSS import
+ * survives and drags its dependencies into the shared chunk with it. Keep the
+ * registry free of components that pull heavy libraries in at module scope.
  */
 
 import { COMPONENT_NAMES } from '../components/mdx/names.js';
