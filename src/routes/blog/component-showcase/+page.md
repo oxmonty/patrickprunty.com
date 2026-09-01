@@ -110,7 +110,14 @@ exercitationem ullam corporis suscipit laboriosam.
 
 A local video file, with a poster frame reserved against layout shift:
 
-<MP4 src="/projects/biscuit.mp4" poster="/projects/biscuit-poster.jpg" muted loop />
+<MP4
+	src="/projects/biscuit.mp4"
+	poster="/projects/biscuit-poster.jpg"
+	width={1616}
+	height={1080}
+	muted
+	loop
+/>
 
 And a Spotify embed, which resolves its own type from the id:
 

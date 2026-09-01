@@ -8,6 +8,8 @@
 		loop = false,
 		muted = false,
 		poster,
+		width,
+		height,
 		class: className = ''
 	}: {
 		src: string;
@@ -16,6 +18,13 @@
 		loop?: boolean;
 		muted?: boolean;
 		poster?: string;
+		/**
+		 * The video's own pixel dimensions. Given both, the browser knows the box's
+		 * shape before it has loaded anything, which is what stops the element
+		 * collapsing to its default size between the poster and the first frame.
+		 */
+		width?: number;
+		height?: number;
 		class?: string;
 	} = $props();
 
@@ -41,6 +50,8 @@
 		{muted}
 		{poster}
 		{preload}
+		{width}
+		{height}
 		playsinline
 		class={cn('not-prose my-6 block h-auto w-full', className)}
 	></video>
