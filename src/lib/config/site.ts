@@ -19,6 +19,7 @@ export interface Project {
 const projects: Project[] = [
 	{
 		name: 'Console',
+		draft: true,
 		// TODO: real preview image. Splash artwork stands in.
 		image: '/projects/console.svg',
 		url: 'https://github.com/oxmonty/console',
@@ -34,6 +35,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Delta Components',
+		draft: true,
 		video: '/projects/delta-demo.mp4',
 		image: '/projects/delta-poster.jpg',
 		url: 'https://deltacomponents.dev',
@@ -42,13 +44,20 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Jigsaw Presents',
-		draft: true,
 		image: '/projects/jigsaw-presents.webp',
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		description: 'Video essays exploring trending films, television, gaming, and music'
 	},
 	{
+		name: 'Monty',
+		// TODO: replace the placeholder description with your own copy.
+		image: '/projects/monty-preview.webp',
+		url: 'https://monty.so',
+		description: 'TODO: one-line description of Monty'
+	},
+	{
 		name: 'Lotso',
+		draft: true,
 		// TODO: replace the placeholder description and url with your own copy.
 		video: '/projects/lotso.mp4',
 		image: '/projects/lotso-poster.jpg',
@@ -57,6 +66,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Doto',
+		draft: true,
 		// TODO: real preview, description, and url. Splash artwork stands in.
 		image: '/projects/doto.svg',
 		url: '#',
@@ -64,6 +74,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Patrick Prunty on Substack',
+		draft: true,
 		// TODO: real preview image. Splash artwork stands in.
 		image: '/projects/substack.svg',
 		url: 'https://pprunty.substack.com',
@@ -71,6 +82,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Yoshi Notebooks',
+		draft: true,
 		// TODO: real preview image. Splash artwork stands in.
 		image: '/projects/yoshi.svg',
 		url: 'https://yoshinotebooks.com',
