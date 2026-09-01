@@ -31,6 +31,8 @@ export interface SeoInput {
 
 export interface Seo extends Required<Omit<SeoInput, 'publishedTime' | 'modifiedTime'>> {
 	canonical: string;
+	/** True when `image` is the card drawn at build time, whose size we know. */
+	generatedImage: boolean;
 	publishedTime?: string;
 	modifiedTime?: string;
 }
@@ -43,6 +45,7 @@ export function buildSeo(input: SeoInput = {}): Seo {
 	const description = input.description ?? site.description;
 	// An explicit image wins; everything else gets the card built for it at
 	// build time, so no page falls back to the bare site icon.
+	const generatedImage = !input.image;
 	const image = absoluteUrl(input.image ?? ogPath(input.path ?? '/'));
 
 	return {
@@ -51,6 +54,7 @@ export function buildSeo(input: SeoInput = {}): Seo {
 		image,
 		path: input.path ?? '/',
 		canonical: absoluteUrl(input.path ?? '/'),
+		generatedImage,
 		type: input.type ?? 'website',
 		authors: input.authors ?? [site.author.name],
 		keywords: input.keywords ?? [],

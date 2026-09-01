@@ -28,8 +28,15 @@
 	<meta property="og:title" content={seo.title} />
 	<meta property="og:description" content={seo.description} />
 	<meta property="og:image" content={seo.image} />
-	<meta property="og:image:width" content="1200" />
-	<meta property="og:image:height" content="630" />
+	<!--
+		Only the generated card has dimensions we can state. A frontmatter image is
+		whatever shape the author linked, and declaring the wrong size makes
+		scrapers reserve the wrong box for it.
+	-->
+	{#if seo.generatedImage}
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+	{/if}
 	<meta property="og:image:alt" content={seo.title} />
 	{#if seo.type === 'article'}
 		{#if seo.publishedTime}

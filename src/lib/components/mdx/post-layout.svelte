@@ -22,19 +22,21 @@
 	import { site } from '$lib/config/site';
 	import type { Post } from '$lib/posts';
 
-	// Frontmatter arrives as props. `image` is consumed by the listing (as the
-	// hover preview) and by the feed, not by this page.
+	// Frontmatter arrives as props.
 	let {
 		children,
 		title,
 		description,
 		date,
+		image,
 		draft
 	}: {
 		children: import('svelte').Snippet;
 		title?: string;
 		description?: string;
 		date?: string;
+		/** Doubles as the listing's hover preview and the post's OG card. */
+		image?: string;
 		/** Frontmatter flag. The post is dropped from every listing in a build,
 		    so the badge is only ever seen while developing. */
 		draft?: boolean;
@@ -87,10 +89,10 @@
 </script>
 
 <!--
-	`image` is listing artwork, not a card: every post unfurls with the OG card
-	built for it at build time, so a hotlinked painting never stands in for one.
+	A post unfurls with its own frontmatter artwork. Posts without any fall back
+	to the card drawn for them at build time, so none unfurls bare.
 -->
-<Seo {title} {description} path={page.url.pathname} type="article" publishedTime={date} />
+<Seo {title} {description} {image} path={page.url.pathname} type="article" publishedTime={date} />
 
 <EditorialPage masthead="p">
 	<article>
