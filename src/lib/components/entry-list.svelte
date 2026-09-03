@@ -58,7 +58,7 @@
 					<!-- Decorative here: the title below names the entry. -->
 					<a
 						href={entry.href}
-						class="preview"
+						class="preview not-prose"
 						tabindex="-1"
 						aria-hidden="true"
 						target={isExternal(entry.href) ? '_blank' : undefined}
@@ -85,7 +85,7 @@
 				{:else if entry.image}
 					<a
 						href={entry.href}
-						class="preview"
+						class="preview not-prose"
 						tabindex="-1"
 						aria-hidden="true"
 						target={isExternal(entry.href) ? '_blank' : undefined}
@@ -219,9 +219,10 @@
 	 * source asset happens to be. Only /projects renders these — blog and code
 	 * pass `preview` for the cursor tile instead, never `image` or `video`.
 	 *
-	 * Every source is wider than 3/2 (1.50 for biscuit, 1.59 for the webp
-	 * screenshots, 1.65 for delta, 1.78 for lotso), so `cover` only ever trims
-	 * the sides. Nothing loses its top or bottom edge.
+	 * Most sources are wider than 3/2 (1.50 for biscuit, 1.59 for the webp
+	 * screenshots, 1.65 for delta, 1.78 for lotso), so `cover` only trims their
+	 * sides. The square jigsaw loop is the exception: it loses its top and
+	 * bottom edges, which the centred artwork can spare.
 	 */
 	.preview img,
 	.preview video {
@@ -235,6 +236,21 @@
 
 	.preview :global(.is-loaded) {
 		opacity: 1;
+	}
+
+	/*
+	 * A hair of dim under the pointer, so the tile reads as clickable. :active
+	 * carries it to touch, where there is no hover and the loop is already
+	 * playing — a tap otherwise gives no feedback at all. Outranks .is-loaded on
+	 * the added pseudo-class rather than !important.
+	 *
+	 * The tile anchors carry `not-prose` for this: without it the prose link
+	 * hover in layout.css paints --highlight behind them, and any opacity below
+	 * 1 lets that acid green through the media.
+	 */
+	.preview:hover :global(.is-loaded),
+	.preview:active :global(.is-loaded) {
+		opacity: 0.95;
 	}
 
 	/* A fade is decoration; anyone asking for less motion just gets the media. */
