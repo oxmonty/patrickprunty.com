@@ -44,6 +44,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Jigsaw Presents',
+		video: '/projects/jigsaw-presents.mp4',
 		image: '/projects/jigsaw-presents.webp',
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		description: 'Video essays exploring trending films, television, gaming, and music'
