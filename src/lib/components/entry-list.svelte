@@ -219,10 +219,23 @@
 	 * Set here rather than on .cols in layout.css: that grid is also the nav
 	 * bar, the footer, and the home page, none of which want a 3rem mobile gap.
 	 * `section.cols` outranks `.editorial .cols` on the element, so this needs
-	 * no !important and no media query of its own.
+	 * no !important.
 	 */
 	section.cols {
 		row-gap: 3rem;
+	}
+
+	/*
+	 * A touch wider once the grid is one column. Side by side, two entries are
+	 * separated by the column boundary as well as the gap; stacked, the gap is
+	 * the only thing holding them apart, so it does the work of both. Keeps the
+	 * internal-under-external margin comfortable too: 3.5rem against the 1.4rem
+	 * that is the widest space inside an entry.
+	 */
+	@media screen and (max-width: 800px) {
+		section.cols {
+			row-gap: 3.5rem;
+		}
 	}
 
 	.preview {
