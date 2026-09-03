@@ -208,6 +208,23 @@
 		font-weight: 500;
 	}
 
+	/*
+	 * An entry is a block with its own internal spacing — 0.6rem from tile to
+	 * title, 1.4rem from title to description. The shared .cols rule collapses
+	 * to a 1rem gap under 800px, which separated two entries by less than one
+	 * entry's own parts and left descriptions reading as captions for the next
+	 * project's tile. Held at the desktop 3rem at every width so the gap between
+	 * entries always outranks the spacing within one.
+	 *
+	 * Set here rather than on .cols in layout.css: that grid is also the nav
+	 * bar, the footer, and the home page, none of which want a 3rem mobile gap.
+	 * `section.cols` outranks `.editorial .cols` on the element, so this needs
+	 * no !important and no media query of its own.
+	 */
+	section.cols {
+		row-gap: 3rem;
+	}
+
 	.preview {
 		display: block;
 		margin-bottom: 0.6rem;
