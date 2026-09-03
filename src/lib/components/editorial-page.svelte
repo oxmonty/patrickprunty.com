@@ -457,7 +457,7 @@
 		 * is lost by dropping it here.
 		 */
 		.index-menu li + li {
-			margin-top: 1.2rem;
+			margin-top: 1rem;
 		}
 
 		.index-menu a {
