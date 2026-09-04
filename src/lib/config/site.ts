@@ -39,7 +39,7 @@ const projects: Project[] = [
 		image: '/projects/delta-poster.jpg',
 		url: 'https://deltacomponents.dev',
 		description:
-			'High-performance components registry built on top of shadcn/ui. From AI chat interfaces to interactive media. Copy, paste, and own the code'
+			"Curated UI components I've built over the years, the ones that make the difference. Distributed via the shadcn registry"
 	},
 	{
 		name: 'Jigsaw Presents',
