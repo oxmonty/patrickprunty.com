@@ -35,7 +35,6 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Delta Components',
-		draft: true,
 		video: '/projects/delta-demo.mp4',
 		image: '/projects/delta-poster.jpg',
 		url: 'https://deltacomponents.dev',
@@ -44,6 +43,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Jigsaw Presents',
+		draft: true,
 		video: '/projects/jigsaw-presents.mp4',
 		image: '/projects/jigsaw-presents.webp',
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
