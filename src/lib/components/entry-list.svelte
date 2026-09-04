@@ -2,6 +2,7 @@
 	import { previewPlayback } from '$lib/actions/preview-playback';
 	import { revealOnLoad } from '$lib/actions/reveal-on-load';
 	import DraftBadge from '$lib/components/draft-badge.svelte';
+	import Skeleton from '$lib/components/mdx/skeleton.svelte';
 
 	/**
 	 * The listing body shared by /blog, /code, and /projects. Entries arrive with
@@ -81,6 +82,7 @@
 							use:previewPlayback
 							use:revealOnLoad
 						></video>
+						<Skeleton class="tile-skeleton" />
 					</a>
 				{:else if entry.image}
 					<a
@@ -92,6 +94,7 @@
 						rel={isExternal(entry.href) ? 'noopener noreferrer' : undefined}
 					>
 						<img src={entry.image} alt="" loading="lazy" use:revealOnLoad />
+						<Skeleton class="tile-skeleton" />
 					</a>
 				{/if}
 				<h3>
@@ -242,6 +245,34 @@
 		display: block;
 		margin-bottom: 0.6rem;
 		text-decoration: none;
+		/* Containing block for the skeleton below. */
+		position: relative;
+	}
+
+	/*
+	 * Holds the tile's 3/2 box while the media loads, which was previously blank
+	 * paper. Placed after the media so `.is-loaded ~` can reach it: the two
+	 * cross-fade over the same 400ms rather than the skeleton cutting out and
+	 * flashing the page through a tile still part-way through its own fade.
+	 *
+	 * pointer-events: none because it covers the video — swallowing the pointer
+	 * here would eat the hover that starts playback.
+	 */
+	.preview :global(.tile-skeleton) {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		transition: opacity 400ms ease-out;
+	}
+
+	.preview :global(.is-loaded ~ .tile-skeleton) {
+		/*
+		 * Stop the pulse before fading: a running animation outranks a normal
+		 * declaration in the cascade, so opacity alone kept losing to the
+		 * keyframes and the skeleton pulsed on top of the loaded media forever.
+		 */
+		animation: none;
+		opacity: 0;
 	}
 
 	/*
@@ -288,6 +319,11 @@
 		.preview img,
 		.preview video {
 			opacity: 1;
+			transition: none;
+		}
+
+		/* Skeleton itself already drops its pulse via motion-reduce. */
+		.preview :global(.tile-skeleton) {
 			transition: none;
 		}
 	}
