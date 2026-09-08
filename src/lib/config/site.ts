@@ -110,8 +110,8 @@ export const site = {
 		github: 'https://github.com/pprunty',
 		/** This site's own repository, linked from the footer's build hash. */
 		repo: 'https://github.com/oxmonty/patrickprunty.com',
-		substack: 'https://substack.com/@pprunty',
-		/** The publication itself, which is what /subscribe hangs off. */
+		substack: 'https://pprunty.substack.com',
+		/** The publication's subscribe endpoint, which the form posts to. */
 		newsletter: 'https://pprunty.substack.com/subscribe',
 		linkedin: 'https://www.linkedin.com/in/patrickprunty/',
 		strava: 'https://www.strava.com/athletes/72636452',
