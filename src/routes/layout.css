@@ -21,7 +21,7 @@
 	--column-gap: 3rem;
 
 	/*
-	 * Editorial layer, after staydecent.ca: near-white paper, near-black ink,
+	 * Editorial layer: near-white paper, near-black ink,
 	 * and one acid-green highlight that only ever appears on link hover. Every
 	 * heading sits at 1rem and normal weight — hierarchy comes from underline,
 	 * caps, and whitespace, not size. The single exception is the page title.
@@ -40,7 +40,7 @@
 	--rule: #d7d2bf;
 	--highlight: #3f3;
 	/*
-	 * Callout backgrounds. --note is staydecent's .note yellow and the default;
+	 * Callout backgrounds. --note is the default yellow;
 	 * the rest sit at the same lightness and chroma so a page of mixed callouts
 	 * reads as one family rather than a paint chart.
 	 */
@@ -86,15 +86,14 @@
 }
 
 /*
- * Root size, a step over staydecent.ca's 18px. Every rem in the editorial layer
- * is sized against this, so setting it on body instead would silently shrink
- * each one — headings at 1rem, the page title at 5rem, the 1.4rem text rhythm.
- * Raising it here scales the whole system together rather than pulling body
- * copy out of proportion with the rhythm around it.
+ * Root size. Every rem in the editorial layer is sized against this, so setting
+ * it on body instead would silently shrink each one — headings at 1rem, the page
+ * title at 5rem, the 1.4rem text rhythm. Raising it here scales the whole system
+ * together rather than pulling body copy out of proportion with the rhythm
+ * around it.
  *
- * Their own `max-width: 800px` step to 16px is missing its selector and never
- * applies, so the site is one size at every width. Matched here rather than
- * reproducing a rule that does nothing.
+ * No breakpoint steps it down, so the rhythm holds from a phone to a wide
+ * monitor.
  */
 html {
 	font-size: 19px;
@@ -129,8 +128,7 @@ html {
 }
 
 /*
- * Editorial layout, ported from staydecent.ca and shared by every page that
- * uses the site chrome. It lives here rather than in a component's <style>
+ * Editorial layout, shared by every page that uses the site chrome. It lives here rather than in a component's <style>
  * because Svelte scopes styles per component, and these element rules have to
  * reach page content rendered as a child snippet.
  *
@@ -194,6 +192,20 @@ body {
 .editorial footer {
 	max-width: 1280px;
 	padding: 0;
+}
+
+/*
+ * A post is one column of text, so it holds its own measure instead of taking
+ * the frame the listing grid needs. The prose column, the floated aside, and
+ * the post-end block are each 50% of this, so the frame is what sets the line
+ * length — 1400px puts the text at 700px, around 70 characters.
+ *
+ * The article alone. Header and footer keep the frame every other page gives
+ * them, so the masthead and nav hold still when you navigate into a post
+ * instead of jumping inward with the text.
+ */
+.editorial article:has(.prose-editorial) {
+	max-width: 1400px;
 }
 
 .editorial footer {
@@ -433,8 +445,7 @@ body {
 }
 
 /*
- * Markdown headings, matching staydecent.ca: there is no type scale in the body
- * at all. Every heading sits at 1rem, and rank comes from caps, weight, and
+ * Markdown headings: there is no type scale in the body at all. Every heading sits at 1rem, and rank comes from caps, weight, and
  * whitespace rather than size — only the 5rem page title breaks scale.
  *
  * Tailwind Typography's defaults are the opposite (800/700/600 across h1/h2/h3
@@ -507,9 +518,10 @@ body {
 	 * unless it is marked as an aside, either by passing class="media-aside" to a
 	 * media component or by wrapping it in <div class="media-aside">.
 	 *
-	 * An aside hangs a gutter past the container's right edge — staydecent gets
-	 * that for free from two 50% grid tracks plus a 3rem gap totalling 100% +
-	 * 3rem; a contained float stops a gutter short.
+	 * An aside hangs a gutter past the container's right edge. Two 50% grid
+	 * tracks plus a 3rem gap would total 100% + 3rem and give that for free, but
+	 * a contained float stops a gutter short, so the negative margin supplies
+	 * it.
 	 */
 	.prose-editorial .media-aside {
 		float: right;

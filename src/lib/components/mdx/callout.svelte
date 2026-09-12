@@ -2,8 +2,7 @@
 	import { cn } from '$lib/utils';
 
 	/**
-	 * Severity is carried by the background wash, the way staydecent's .note
-	 * reads — no icon, no border. The two inverted variants also set a text
+	 * Severity is carried by the background wash alone — no icon, no border. The two inverted variants also set a text
 	 * colour, since ink on near-black or paper on acid green would not hold.
 	 */
 	const variants = {
