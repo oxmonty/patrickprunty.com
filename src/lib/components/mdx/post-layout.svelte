@@ -155,7 +155,7 @@
 
 	@media screen and (min-width: 1024px) {
 		.post-end {
-			max-width: 50%;
+			max-width: calc(var(--post-frame) / 2);
 		}
 	}
 

@@ -19,6 +19,13 @@
 	--radius: 0;
 	/* Gutter between the text column and the figure column. */
 	--column-gap: 3rem;
+	/*
+	 * Frame for a post's body. The prose column and the figure column beside it
+	 * are each half of this, so it is what sets the line length: 700px of text,
+	 * around 70 characters. The title is deliberately outside it — the article
+	 * keeps the full frame, so a 5rem heading still runs the width of the page.
+	 */
+	--post-frame: 1400px;
 
 	/*
 	 * Editorial layer: near-white paper, near-black ink,
@@ -192,20 +199,6 @@ body {
 .editorial footer {
 	max-width: 1280px;
 	padding: 0;
-}
-
-/*
- * A post is one column of text, so it holds its own measure instead of taking
- * the frame the listing grid needs. The prose column, the floated aside, and
- * the post-end block are each 50% of this, so the frame is what sets the line
- * length — 1400px puts the text at 700px, around 70 characters.
- *
- * The article alone. Header and footer keep the frame every other page gives
- * them, so the masthead and nav hold still when you navigate into a post
- * instead of jumping inward with the text.
- */
-.editorial article:has(.prose-editorial) {
-	max-width: 1400px;
 }
 
 .editorial footer {
@@ -495,9 +488,17 @@ body {
 
 /*
  * Post body: prose keeps a readable measure while figures take the empty space
- * beside it. The text column is capped rather than the wrapper, so a floated
- * figure has somewhere to go — capping the wrapper would leave no room.
+ * beside it.
+ *
+ * The wrapper carries the frame and the children take half of it each, so the
+ * text and a floated figure tile inside it rather than spreading with the page.
+ * Below 1024px there is no float to make room for and the children fall back to
+ * a fixed measure, so the frame does nothing there.
  */
+.prose-editorial {
+	max-width: var(--post-frame);
+}
+
 .prose-editorial > * {
 	max-width: 42rem;
 }
