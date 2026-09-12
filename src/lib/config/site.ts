@@ -27,6 +27,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Biscuit',
+		draft: true,
 		video: '/projects/biscuit.mp4',
 		image: '/projects/biscuit-poster.jpg',
 		url: 'https://github.com/oxmonty/biscuit',
