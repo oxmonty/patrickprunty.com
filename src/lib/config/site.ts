@@ -36,8 +36,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Delta Components',
-		video: '/projects/delta-demo.mp4',
-		image: '/projects/delta-poster.jpg',
+		image: '/projects/delta-poster.webp',
 		url: 'https://deltacomponents.dev',
 		description:
 			"A curated collection of UI components I've refined over the years, the ones that make the difference. Free and open source via the shadcn registry."
@@ -52,6 +51,7 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Monty',
+		draft: true,
 		// TODO: replace the placeholder description with your own copy.
 		image: '/projects/monty-preview.webp',
 		url: 'https://monty.so',
