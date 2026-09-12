@@ -504,16 +504,4 @@
 		display: block;
 	}
 	*/
-
-	/*
-	 * The native ↗ glyph rather than a drawn icon. It sits high and tight against
-	 * the word, so a hair of leading space and a nudge put it on the same optical
-	 * line as the text it follows.
-	 */
-	.external-arrow {
-		display: inline-block;
-		margin-left: 0.1em;
-		font-size: 0.85em;
-		vertical-align: 0.06em;
-	}
 </style>

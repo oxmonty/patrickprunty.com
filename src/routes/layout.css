@@ -322,6 +322,22 @@ body {
 	background-color: var(--highlight);
 }
 
+/*
+ * The native ↗ glyph rather than a drawn icon, marking a link that leaves the
+ * site. It sits high and tight against the word, so a hair of leading space and
+ * a nudge put it on the same optical line as the text it follows.
+ *
+ * Decorative: every link that uses it already announces the new tab through its
+ * own accessible name, and a screen reader would otherwise say "north east
+ * arrow" and still not mention the tab change.
+ */
+.external-arrow {
+	display: inline-block;
+	margin-left: 0.1em;
+	font-size: 0.85em;
+	vertical-align: 0.06em;
+}
+
 .editorial img {
 	max-height: calc(100dvh - 2rem);
 	max-width: 100%;

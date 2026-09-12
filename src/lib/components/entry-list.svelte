@@ -328,17 +328,6 @@
 		}
 	}
 
-	/*
-	 * Same native glyph the footer uses. Decorative: the link already announces
-	 * that it opens in a new tab through its own accessible name.
-	 */
-	.external-arrow {
-		display: inline-block;
-		margin-left: 0.1em;
-		font-size: 0.85em;
-		vertical-align: 0.06em;
-	}
-
 	.read-more {
 		display: inline-block;
 		width: 1.375em;
