@@ -97,7 +97,7 @@ export const site = {
 	name: 'Patrick Prunty',
 	domain: 'patrickprunty.com',
 	url,
-	description: 'Software developer, writer, and occasional adventurer',
+	description: 'Software developer, writer, and occasional explorer',
 	locale: 'en_US',
 	themeColor: '#F5F5F7',
 	googleSiteVerification: '-iY6qDMJuHD3UtRxA28Hico0L_3ouq5lGdhwbbiZQ7A',
