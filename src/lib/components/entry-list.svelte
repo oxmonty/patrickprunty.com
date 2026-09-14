@@ -23,7 +23,17 @@
 		draft?: boolean;
 	}
 
-	let { tagline, entries }: { tagline: string; entries: Entry[] } = $props();
+	let {
+		tagline,
+		entries,
+		/*
+		 * Shown in place of the listing when there is nothing to list. Passed per
+		 * page rather than fixed here: a section with no posts and a section with
+		 * no projects are not the same sentence, and only two of the three have a
+		 * subscribe form underneath to point at.
+		 */
+		empty = 'Nothing here yet.'
+	}: { tagline: string; entries: Entry[]; empty?: string } = $props();
 
 	/**
 	 * Derived rather than configured: project entries point at other sites and
@@ -146,7 +156,7 @@
 			</div>
 		{:else}
 			<div>
-				<p>Nothing here yet.</p>
+				<p>{empty}</p>
 			</div>
 		{/each}
 	</section>

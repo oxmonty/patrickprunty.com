@@ -24,7 +24,11 @@
 <Seo title={meta.title} path={meta.path} description={meta.description} />
 
 <EditorialPage>
-	<EntryList tagline={meta.description} {entries} />
+	<EntryList
+		tagline={meta.description}
+		{entries}
+		empty="No notes published yet. Subscribe below to get the first one."
+	/>
 	<article>
 		<section class="cols">
 			<div><Subscribe /></div>
