@@ -29,7 +29,7 @@
 						rel="noopener noreferrer"
 						aria-label="Spotify (opens in a new tab)"
 						>Spotify<span aria-hidden="true" class="external-arrow">&#8599;</span></a
-					>, but I'm originally from Dublin, Ireland.
+					>, and originally from Dublin, Ireland.
 				</p>
 				<p>
 					In my spare time, I develop <a href="/projects">open-source projects</a> for personal use,

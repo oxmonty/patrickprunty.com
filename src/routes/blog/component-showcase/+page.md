@@ -219,9 +219,9 @@ cillum dolore eu fugiat nulla pariatur.
 
 ## Cards
 
-<LinkedCard href="/blog/winds-of-winter-preview-chapters">
+<LinkedCard href="/projects">
 
-**Winds of Winter preview chapters** — an internal card, styled as a block link.
+**Projects** — an internal card, styled as a block link.
 
 </LinkedCard>
 
