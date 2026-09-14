@@ -3,6 +3,7 @@ title: Winds of Winter preview chapters
 description: Every preview chapter George R.R. Martin has released from the unpublished sixth book, compiled in one place and free to download as PDF, epub, or mobi.
 date: 2026-08-17
 image: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Alfred_Sisley%2C_La_Neige_%C3%A0_Louveciennes_%28cropped%29.jpg/1280px-Alfred_Sisley%2C_La_Neige_%C3%A0_Louveciennes_%28cropped%29.jpg
+draft: true
 ---
 
 I'm a **huge** [_A Song of Ice and Fire_](https://en.wikipedia.org/wiki/A_Song_of_Ice_and_Fire)
