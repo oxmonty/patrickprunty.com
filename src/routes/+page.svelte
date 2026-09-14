@@ -2,6 +2,7 @@
 	import EditorialPage from '$lib/components/editorial-page.svelte';
 	import Seo from '$lib/components/seo.svelte';
 	import { pageMeta } from '$lib/config/pages';
+	import { site } from '$lib/config/site';
 
 	const meta = pageMeta('/');
 </script>
@@ -31,9 +32,18 @@
 					>, but I'm originally from Dublin, Ireland.
 				</p>
 				<p>
-					In my spare time, I develop <a href="/projects">open-source projects</a> for personal use, compete
-					in endurance sports competitions, and explore different forms of creative digital media using
-					audio, animation, and &hellip;
+					In my spare time, I develop <a href="/projects">open-source projects</a> for personal use,
+					compete in
+					<a
+						href={site.links.strava}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="Endurance sports competitions on Strava (opens in a new tab)"
+						>endurance sports competitions<span aria-hidden="true" class="external-arrow"
+							>&#8599;</span
+						></a
+					>, and explore different forms of creative digital media using audio, animation, and
+					&hellip;
 				</p>
 				<p>If any of my work inspired you or made you think, don't hesitate to reach out.</p>
 
