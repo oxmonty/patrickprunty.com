@@ -42,8 +42,7 @@
 						>endurance sports competitions<span aria-hidden="true" class="external-arrow"
 							>&#8599;</span
 						></a
-					>, and explore different forms of creative digital media using audio, animation, and
-					&hellip;
+					>, and explore different forms of creative digital media using audio, animation, and AI.
 				</p>
 				<p>If any of my work inspired you or made you think, don't hesitate to reach out.</p>
 
