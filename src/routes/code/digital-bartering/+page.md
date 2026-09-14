@@ -3,7 +3,7 @@ title: Digital bartering
 description: Haggling at a market is a dance between the buyer's intent and the seller's desperation. Online the price is fixed and the dance moved to the boardroom.
 date: 2026-08-21
 image: https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/The_Moneylender_and_his_Wife_by_Quinten_Massijs.jpg/1280px-The_Moneylender_and_his_Wife_by_Quinten_Massijs.jpg
-draft: false
+draft: true
 ---
 
 I come from a family who'd visit the market on weekends. There, you would barter
