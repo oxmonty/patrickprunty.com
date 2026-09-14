@@ -52,10 +52,9 @@ const projects: Project[] = [
 	{
 		name: 'Monty',
 		draft: true,
-		// TODO: replace the placeholder description with your own copy.
 		image: '/projects/monty-preview.webp',
 		url: 'https://monty.so',
-		description: 'TODO: one-line description of Monty'
+		description: 'Your notes, planning, and personal AI assistant all in one place'
 	},
 	{
 		name: 'Lotso',
