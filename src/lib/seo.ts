@@ -4,15 +4,7 @@ export function absoluteUrl(path: string): string {
 	return new URL(path, site.url).href;
 }
 
-/**
- * Address of a page's OpenGraph card. Mirrors the page's own path, with 'home'
- * standing in for the root, which has no segment of its own. The card route
- * generates exactly these paths — keep the two in step.
- */
-export function ogPath(path: string): string {
-	const segment = path.replace(/^\/|\/$/g, '');
-	return `/og/${segment || 'home'}.png`;
-}
+export const SITE_IMAGE = '/icons/512x512.webp';
 
 export interface SeoInput {
 	title?: string;
@@ -31,8 +23,8 @@ export interface SeoInput {
 
 export interface Seo extends Required<Omit<SeoInput, 'publishedTime' | 'modifiedTime'>> {
 	canonical: string;
-	/** True when `image` is the card drawn at build time, whose size we know. */
-	generatedImage: boolean;
+	/** True when `image` is the site icon, whose size we know. */
+	siteImage: boolean;
 	publishedTime?: string;
 	modifiedTime?: string;
 }
@@ -43,10 +35,8 @@ export interface Seo extends Required<Omit<SeoInput, 'publishedTime' | 'modified
  */
 export function buildSeo(input: SeoInput = {}): Seo {
 	const description = input.description ?? site.description;
-	// An explicit image wins; everything else gets the card built for it at
-	// build time, so no page falls back to the bare site icon.
-	const generatedImage = !input.image;
-	const image = absoluteUrl(input.image ?? ogPath(input.path ?? '/'));
+	const siteImage = !input.image;
+	const image = absoluteUrl(input.image ?? SITE_IMAGE);
 
 	return {
 		title: input.title ? `${site.name} \\ ${input.title}` : site.name,
@@ -54,7 +44,7 @@ export function buildSeo(input: SeoInput = {}): Seo {
 		image,
 		path: input.path ?? '/',
 		canonical: absoluteUrl(input.path ?? '/'),
-		generatedImage,
+		siteImage,
 		type: input.type ?? 'website',
 		authors: input.authors ?? [site.author.name],
 		keywords: input.keywords ?? [],
