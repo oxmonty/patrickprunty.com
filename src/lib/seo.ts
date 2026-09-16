@@ -4,7 +4,7 @@ export function absoluteUrl(path: string): string {
 	return new URL(path, site.url).href;
 }
 
-export const SITE_IMAGE = '/icons/512x512.webp';
+export const SITE_IMAGE = '/images/og.png';
 
 export interface SeoInput {
 	title?: string;
@@ -23,7 +23,7 @@ export interface SeoInput {
 
 export interface Seo extends Required<Omit<SeoInput, 'publishedTime' | 'modifiedTime'>> {
 	canonical: string;
-	/** True when `image` is the site icon, whose size we know. */
+	/** True when `image` is the site card, whose size we know. */
 	siteImage: boolean;
 	publishedTime?: string;
 	modifiedTime?: string;

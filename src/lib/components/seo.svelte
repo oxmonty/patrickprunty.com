@@ -29,13 +29,13 @@
 	<meta property="og:description" content={seo.description} />
 	<meta property="og:image" content={seo.image} />
 	<!--
-		Only the site icon has dimensions we can state. A frontmatter image is
+		Only the site card has dimensions we can state. A frontmatter image is
 		whatever shape the author linked, and declaring the wrong size makes
 		scrapers reserve the wrong box for it.
 	-->
 	{#if seo.siteImage}
-		<meta property="og:image:width" content="512" />
-		<meta property="og:image:height" content="512" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
 	{/if}
 	<meta property="og:image:alt" content={seo.title} />
 	{#if seo.type === 'article'}
@@ -50,8 +50,7 @@
 		{/each}
 	{/if}
 
-	<!-- The square icon would be centre-cropped to 2:1 in a large card. -->
-	<meta name="twitter:card" content={seo.siteImage ? 'summary' : 'summary_large_image'} />
+	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content={site.author.twitter} />
 	<meta name="twitter:creator" content={site.author.twitter} />
 	<meta name="twitter:title" content={seo.title} />
