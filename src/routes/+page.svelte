@@ -31,7 +31,6 @@
 						>Spotify<span aria-hidden="true" class="external-arrow">&#8599;</span></a
 					>, and I'm originally from Dublin, Ireland.
 				</p>
-				<p>This is where I share things I'm building, writing, and thinking about.</p>
 				<p>
 					Outside of work, I develop <a href="/projects">open-source projects</a>, compete in
 					<a
