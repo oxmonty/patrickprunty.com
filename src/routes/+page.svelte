@@ -18,8 +18,8 @@
 		<section class="cols">
 			<div>
 				<p>
-					Hi, I'm Patrick Prunty, a <a href="/code">software developer</a>,
-					<a href="/blog">writer</a>, and occasional explorer.
+					Hi, I'm Patrick Prunty, a <a href="/code">software engineer</a> and
+					<a href="/blog">writer</a>.
 				</p>
 				<p>
 					I'm currently based in London, United Kingdom, where I work at
@@ -32,8 +32,7 @@
 					>, and originally from Dublin, Ireland.
 				</p>
 				<p>
-					In my spare time, I develop <a href="/projects">open-source projects</a> for personal use,
-					compete in
+					In my spare time, I develop <a href="/projects">open-source projects</a>, compete in
 					<a
 						href={site.links.strava}
 						target="_blank"
@@ -42,7 +41,7 @@
 						>endurance sports competitions<span aria-hidden="true" class="external-arrow"
 							>&#8599;</span
 						></a
-					>, and explore different forms of creative digital media using audio, animation, and AI.
+					>, and explore different forms of creative digital media.
 				</p>
 				<p>If any of my work inspired you or made you think, don't hesitate to reach out.</p>
 
