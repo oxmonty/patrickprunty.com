@@ -22,28 +22,32 @@
 					<a href="/blog">writer</a>.
 				</p>
 				<p>
-					I'm currently based in London, United Kingdom, where I work at
+					I'm currently based in London, where I work at
 					<a
 						href="https://www.spotify.com"
 						target="_blank"
 						rel="noopener noreferrer"
 						aria-label="Spotify (opens in a new tab)"
 						>Spotify<span aria-hidden="true" class="external-arrow">&#8599;</span></a
-					>, and originally from Dublin, Ireland.
+					>, and I'm originally from Dublin, Ireland.
 				</p>
+				<p>This is where I share things I'm building, writing, and thinking about.</p>
 				<p>
-					In my spare time, I develop <a href="/projects">open-source projects</a>, compete in
+					Outside of work, I develop <a href="/projects">open-source projects</a>, compete in
 					<a
 						href={site.links.strava}
 						target="_blank"
 						rel="noopener noreferrer"
-						aria-label="Endurance sports competitions on Strava (opens in a new tab)"
-						>endurance sports competitions<span aria-hidden="true" class="external-arrow"
+						aria-label="Endurance events on Strava (opens in a new tab)"
+						>endurance events<span aria-hidden="true" class="external-arrow"
 							>&#8599;</span
 						></a
 					>, and explore different forms of creative digital media.
 				</p>
-				<p>If any of my work inspired you or made you think, don't hesitate to reach out.</p>
+				<p>
+					If something you find here resonates with you or makes you think, feel free to reach
+					out.
+				</p>
 
 				<!--
 					Ported from v1: drawn as a CSS mask rather than an <img>, so the mark
