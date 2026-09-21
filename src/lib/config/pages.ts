@@ -20,10 +20,10 @@ export const PAGES: PageMeta[] = [
 	{
 		path: '/blog',
 		title: 'Blog',
-		description: 'Essays on work, life, and the occasional adventure.'
+		description: 'Essays on work, life, and the occasional adventure'
 	},
-	{ path: '/code', title: 'Code', description: 'Notes on building things for the web.' },
-	{ path: '/projects', title: 'Projects', description: 'Things I build and maintain.' }
+	{ path: '/code', title: 'Code', description: 'Notes on building things for the web' },
+	{ path: '/projects', title: 'Projects', description: 'Things I build and maintain' }
 ];
 
 export function pageMeta(path: string): PageMeta {

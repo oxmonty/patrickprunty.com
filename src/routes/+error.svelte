@@ -11,7 +11,7 @@
 	}
 </script>
 
-<Seo title="Not found" path="/" description="Page not found or moved." />
+<Seo title="Not found" path="/" description="Page not found or moved" />
 
 <!--
 	Deliberately outside the site chrome: there is no header or footer here, so a
