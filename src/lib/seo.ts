@@ -34,7 +34,8 @@ export interface Seo extends Required<Omit<SeoInput, 'publishedTime' | 'modified
  * the bare name. One place, so every route reads the same way in a tab strip.
  */
 export function buildSeo(input: SeoInput = {}): Seo {
-	const description = input.description ?? site.description;
+	// The same copy is a sentence on the page; as metadata it reads as a label.
+	const description = (input.description ?? site.description).replace(/\.$/, '');
 	const siteImage = !input.image;
 	const image = absoluteUrl(input.image ?? SITE_IMAGE);
 
