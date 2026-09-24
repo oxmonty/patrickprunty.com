@@ -402,7 +402,9 @@ body {
 
 	.editorial .cols {
 		grid-gap: 1rem;
-		grid-template-columns: 1fr;
+		/* Same reason as above: a bare 1fr is minmax(auto, 1fr), and the single
+		   column grew to the subscribe row's min-content, past the gutter. */
+		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.editorial .cols > div {

@@ -396,6 +396,13 @@
 		.index summary :global(svg) {
 			stroke-linecap: butt;
 			stroke-linejoin: miter;
+			/*
+			 * Lucide draws the bars from 5 to 19 of its 24-unit grid, so the ink
+			 * stops 5/24 of the icon short of its box. Pushed out by that much,
+			 * the bars end on the text column's right edge the way the masthead
+			 * starts on its left.
+			 */
+			margin-right: calc(-5 / 24 * 30px);
 		}
 
 		.index summary::-webkit-details-marker {

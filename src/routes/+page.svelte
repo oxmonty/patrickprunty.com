@@ -38,14 +38,11 @@
 						target="_blank"
 						rel="noopener noreferrer"
 						aria-label="Endurance events on Strava (opens in a new tab)"
-						>endurance events<span aria-hidden="true" class="external-arrow"
-							>&#8599;</span
-						></a
+						>endurance events<span aria-hidden="true" class="external-arrow">&#8599;</span></a
 					>, and explore different forms of creative digital media.
 				</p>
 				<p>
-					If something you find here resonates with you or makes you think, feel free to reach
-					out.
+					If something you find here resonates with you or makes you think, feel free to reach out.
 				</p>
 
 				<!--
