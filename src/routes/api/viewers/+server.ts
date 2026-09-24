@@ -11,6 +11,8 @@ import type { RequestHandler } from './$types';
  * page it was on, so `unique-viewers:/` is the running total for the whole
  * site; keeping that default is what continues the existing count.
  */
+export const prerender = false;
+
 export const GET: RequestHandler = async ({ url, request, getClientAddress }) => {
 	const key = `unique-viewers:${url.searchParams.get('path') || '/'}`;
 

@@ -22,7 +22,8 @@
 
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
+	<!-- Links preload their page as they scroll into view, as a Next.js <Link> does. -->
+	<body data-sveltekit-preload-data="viewport">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

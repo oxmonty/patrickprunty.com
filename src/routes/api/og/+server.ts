@@ -3,6 +3,8 @@ import { error, json } from '@sveltejs/kit';
 import { fetchOg, parsePublicUrl } from '$lib/server/og';
 import type { RequestHandler } from './$types';
 
+export const prerender = false;
+
 export const GET: RequestHandler = async ({ url }) => {
 	const target = url.searchParams.get('url');
 	if (!target) error(400, 'Missing url parameter');

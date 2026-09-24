@@ -32,6 +32,8 @@ function toLocation(request: Request): string | null {
 
 const toText = (value: unknown) => (typeof value === 'string' && value ? value : null);
 
+export const prerender = false;
+
 export const GET: RequestHandler = async ({ request }) => {
 	const [last, lastAt, secondLast, secondLastAt, thirdLast] =
 		(await redisPipeline([

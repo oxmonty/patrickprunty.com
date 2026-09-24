@@ -34,6 +34,8 @@ async function readCounts(slug: string) {
 	return { views: toCount(results[0]), uniqueViewers: toCount(results[1]) };
 }
 
+export const prerender = false;
+
 export const GET: RequestHandler = async ({ params }) => json(await readCounts(params.slug));
 
 export const POST: RequestHandler = async ({ params, request, getClientAddress }) => {
