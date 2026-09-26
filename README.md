@@ -1,4 +1,7 @@
-# patrickprunty.com
+<h1>
+  <img alt="patrickprunty.com icon" src="./assets/icon.png" width="70" valign="middle">
+  &nbsp;patrickprunty.com
+</h1>
 
 My personal site. SvelteKit and mdsvex, styled with Tailwind.
 
