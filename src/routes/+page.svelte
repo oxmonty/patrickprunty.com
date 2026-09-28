@@ -37,9 +37,8 @@
 						href={site.links.strava}
 						target="_blank"
 						rel="noopener noreferrer"
-						aria-label="Endurance sports competitions on Strava (opens in a new tab)"
-						>endurance sports competitions<span aria-hidden="true" class="external-arrow"
-							>&#8599;</span
+						aria-label="Endurance sports events on Strava (opens in a new tab)"
+						>endurance sports events<span aria-hidden="true" class="external-arrow">&#8599;</span
 						></a
 					>, and explore different forms of creative digital media.
 				</p>
