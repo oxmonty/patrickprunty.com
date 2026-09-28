@@ -37,8 +37,10 @@
 						href={site.links.strava}
 						target="_blank"
 						rel="noopener noreferrer"
-						aria-label="Endurance events on Strava (opens in a new tab)"
-						>endurance events<span aria-hidden="true" class="external-arrow">&#8599;</span></a
+						aria-label="Endurance sports competitions on Strava (opens in a new tab)"
+						>endurance sports competitions<span aria-hidden="true" class="external-arrow"
+							>&#8599;</span
+						></a
 					>, and explore different forms of creative digital media.
 				</p>
 				<p>
@@ -83,5 +85,11 @@
 		background-color: var(--ink);
 		opacity: 0.75;
 		mask: url('/signature.svg') no-repeat center / contain;
+	}
+
+	@media screen and (max-width: 800px) {
+		.signature {
+			width: 210px;
+		}
 	}
 </style>
