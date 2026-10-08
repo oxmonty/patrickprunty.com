@@ -1,5 +1,6 @@
 <script lang="ts">
 	import EditorialPage from '$lib/components/editorial-page.svelte';
+	import HanddrawnFrame from '$lib/components/handdrawn-frame.svelte';
 	import Seo from '$lib/components/seo.svelte';
 	import { pageMeta } from '$lib/config/pages';
 	import { site } from '$lib/config/site';
@@ -56,19 +57,20 @@
 			</div>
 
 			<div class="mobile-first">
-				<img
-					src="/portrait.svg"
-					alt="Patrick Prunty"
-					width="675"
-					height="675"
-					fetchpriority="high"
-				/>
+				<HanddrawnFrame href="/portrait.svg" label="Patrick Prunty" />
 			</div>
 		</section>
 	</article>
 </EditorialPage>
 
 <style>
+	/* Lifts the frame so it sits level with the opening line of the prose. */
+	@media screen and (min-width: 801px) {
+		.mobile-first {
+			margin-top: -1.5rem;
+		}
+	}
+
 	.signature-row {
 		display: flex;
 		justify-content: flex-end;
