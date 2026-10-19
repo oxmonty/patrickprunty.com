@@ -29,7 +29,7 @@ const projects: Project[] = [
 		image: '/projects/jigsaw-presents.webp',
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		description:
-			'A YouTube channel making video essays on the stories, sounds, and scenes shaping culture'
+			'A YouTube channel presenting video essays on the stories, sounds, and scenes shaping culture'
 	}
 ];
 
