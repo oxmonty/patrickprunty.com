@@ -7,3 +7,8 @@ bun.lockb
 
 # Miscellaneous
 /static/
+
+# Posts are mirrored from the Obsidian vault (obsidian.yaml); formatting them
+# here would be undone by the next sync.
+/src/routes/blog/*/+page.md
+/src/routes/code/*/+page.md
