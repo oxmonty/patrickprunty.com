@@ -25,11 +25,11 @@ const projects: Project[] = [
 			'A curated collection of UI components built with TypeScript. Free and open source via the shadcn registry.'
 	},
 	{
-		name: 'Jigsaw Presents (coming soon)',
+		name: 'Jigsaw Presents',
 		image: '/projects/jigsaw-presents.webp',
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		description:
-			'A YouTube channel presenting video essays on the stories, sounds, and scenes shaping culture'
+			'Coming soon: a YouTube channel presenting video essays on the stories, sounds, and scenes shaping culture'
 	}
 ];
 
