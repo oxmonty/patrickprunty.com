@@ -6,6 +6,7 @@ import { defineMDSveXConfig } from 'mdsvex';
 
 import { rehypeHeadingAnchor } from './src/lib/mdx/rehype-heading-anchor.js';
 import { remarkAutoEmbed } from './src/lib/mdx/remark-auto-embed.js';
+import { remarkEscapeBraces } from './src/lib/mdx/remark-escape-braces.js';
 import { highlighter } from './src/lib/mdx/highlight.js';
 
 export default defineMDSveXConfig({
@@ -31,7 +32,7 @@ export default defineMDSveXConfig({
 	// it and renders to HTML at build time.
 	// Cast: mdsvex types plugins against unified 9's Node, not the mdast Root
 	// these plugins declare.
-	remarkPlugins: /** @type {any[]} */ ([remarkMath, remarkAutoEmbed]),
+	remarkPlugins: /** @type {any[]} */ ([remarkMath, remarkAutoEmbed, remarkEscapeBraces]),
 	rehypePlugins: /** @type {any[]} */ ([
 		rehypeSlug,
 		rehypeHeadingAnchor,
