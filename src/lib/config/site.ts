@@ -18,23 +18,6 @@ export interface Project {
  * closing full stop, by house style. */
 const projects: Project[] = [
 	{
-		name: 'Console',
-		draft: true,
-		// TODO: real preview image. Splash artwork stands in.
-		image: '/projects/console.svg',
-		url: 'https://github.com/oxmonty/console',
-		description: 'Open-source alternative to Vercel with Google Cloud Platform integration'
-	},
-	{
-		name: 'Biscuit',
-		draft: true,
-		video: '/projects/biscuit.mp4',
-		image: '/projects/biscuit-poster.jpg',
-		url: 'https://github.com/oxmonty/biscuit',
-		description:
-			'Biscuit generates production-ready CLI repositories from OpenAPI specs. Every CLI is also an MCP server and chat TUI. Open source, in Go'
-	},
-	{
 		name: 'Delta Components',
 		image: '/projects/delta-poster.webp',
 		url: 'https://deltacomponents.dev',
@@ -43,52 +26,9 @@ const projects: Project[] = [
 	},
 	{
 		name: 'Jigsaw Presents',
-		draft: true,
-		video: '/projects/jigsaw-presents.mp4',
 		image: '/projects/jigsaw-presents.webp',
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		description: 'Video essays exploring trending films, television, gaming, and music'
-	},
-	{
-		name: 'Monty',
-		draft: true,
-		image: '/projects/monty-preview.webp',
-		url: 'https://monty.so',
-		description: 'Your notes, planning, and personal AI assistant all in one place'
-	},
-	{
-		name: 'Lotso',
-		draft: true,
-		// TODO: replace the placeholder description and url with your own copy.
-		video: '/projects/lotso.mp4',
-		image: '/projects/lotso-poster.jpg',
-		url: 'https://x.com/konstipaulus/status/2066534707496444317',
-		description: 'TODO: one-line description of Lotso'
-	},
-	{
-		name: 'Doto',
-		draft: true,
-		// TODO: real preview, description, and url. Splash artwork stands in.
-		image: '/projects/doto.svg',
-		url: '#',
-		description: 'TODO: one-line description of Doto'
-	},
-	{
-		name: 'Patrick Prunty on Substack',
-		draft: true,
-		// TODO: real preview image. Splash artwork stands in.
-		image: '/projects/substack.svg',
-		url: 'https://pprunty.substack.com',
-		description: 'Essays and notes, sent by email when they are written'
-	},
-	{
-		name: 'Yoshi Notebooks',
-		draft: true,
-		// TODO: real preview image. Splash artwork stands in.
-		image: '/projects/yoshi.svg',
-		url: 'https://yoshinotebooks.com',
-		description:
-			'Yoshi is a native, GPU-rendered Jupyter notebook desktop app for macOS and Linux, built in Rust on GPUI'
 	}
 ];
 

@@ -290,10 +290,9 @@
 	 * source asset happens to be. Only /projects renders these — blog and code
 	 * pass `preview` for the cursor tile instead, never `image` or `video`.
 	 *
-	 * Most sources are wider than 3/2 (1.50 for biscuit, 1.59 for the webp
-	 * screenshots, 1.65 for delta, 1.78 for lotso), so `cover` only trims their
-	 * sides. The square jigsaw loop is the exception: it loses its top and
-	 * bottom edges, which the centred artwork can spare.
+	 * Both sources are wider than 3/2 (1.59 for the jigsaw logo, 1.65 for
+	 * delta), so `cover` only trims their sides, which the centred artwork can
+	 * spare.
 	 */
 	.preview img,
 	.preview video {
