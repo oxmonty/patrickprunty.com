@@ -25,3 +25,5 @@ Most verification here is read-only DOM measuring in the browser, which the user
 ## Content
 
 Posts are markdown at `src/routes/{blog,code}/<slug>/+page.md`. `draft: true` in the frontmatter keeps one out of a build while leaving it visible in dev (`src/lib/posts.ts`). Projects, links, and feature flags are in `src/lib/config/site.ts`, where `draft` works the same way.
+
+**The Obsidian vault is the source of truth for posts.** `obsidian.yaml` names the vault folder and maps its subfolders to sections; `make sync` (`scripts/sync-posts.ts`) mirrors them into `src/routes/<section>/<slug>/+page.md`, the dev server does the same on every vault change, and the pre-push hook runs it before a push. The note's file name is the slug. Deleting a note deletes the post; `draft:` is read from the note. Edit posts in Obsidian, not in `src/routes`, or the next sync overwrites the change.

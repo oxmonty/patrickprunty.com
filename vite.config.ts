@@ -4,11 +4,12 @@ import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { mdsvex } from 'mdsvex';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 
 import mdsvexConfig from './mdsvex.config.js';
 import { checkOgImages } from './src/lib/mdx/check-og-images.js';
 import { injectMdxComponents } from './src/lib/mdx/inject-components.js';
+import { loadObsidianConfig, syncPosts } from './scripts/sync-posts.ts';
 
 /**
  * The commit the running site was built from, shown in the footer. CI usually
@@ -49,12 +50,47 @@ const siteUrl =
 		`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
 	'https://patrickprunty.com';
 
+/**
+ * Dev only: keeps src/routes mirroring the Obsidian vault (obsidian.yaml), so a
+ * note saved in Obsidian hot-reloads like any other file. `apply: 'serve'`
+ * keeps it out of a build entirely; the committed posts are what deploys.
+ */
+function syncPostsFromVault(): Plugin {
+	return {
+		name: 'sync-posts-from-vault',
+		apply: 'serve',
+		configureServer(server) {
+			const config = loadObsidianConfig(process.cwd());
+			if (!config) return;
+
+			const run = () => {
+				try {
+					for (const change of syncPosts(config, process.cwd())) {
+						server.config.logger.info(`vault ${change.action}  ${change.path}`, {
+							timestamp: true
+						});
+					}
+				} catch (error) {
+					server.config.logger.error(String(error), { timestamp: true });
+				}
+			};
+
+			run();
+			server.watcher.add(config.vault);
+			server.watcher.on('all', (_event, file) => {
+				if (file.startsWith(config.vault) && file.endsWith('.md')) run();
+			});
+		}
+	};
+}
+
 export default defineConfig({
 	define: {
 		__GIT_HASH__: JSON.stringify(gitHash),
 		__SITE_URL__: JSON.stringify(siteUrl)
 	},
 	plugins: [
+		syncPostsFromVault(),
 		checkOgImages(),
 		tailwindcss(),
 		sveltekit({
