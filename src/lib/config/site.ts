@@ -25,7 +25,7 @@ const projects: Project[] = [
 			'A curated collection of UI components built with TypeScript. Free and open source via the shadcn registry.'
 	},
 	{
-		name: 'Jigsaw Presents',
+		name: 'Jigsaw Presents (coming soon)',
 		image: '/projects/jigsaw-presents.webp',
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		description:
