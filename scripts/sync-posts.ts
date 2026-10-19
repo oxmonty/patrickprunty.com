@@ -50,17 +50,32 @@ export interface Change {
 export function syncPosts({ vault, sections }: ObsidianConfig, repoRoot: string): Change[] {
 	const changes: Change[] = [];
 
+	// Validate every folder before touching anything, so a misconfigured
+	// section cannot leave the others half-synced. A missing folder is a
+	// misconfiguration, not an empty section: treating it as empty would delete
+	// every post in the section.
+	for (const folder of Object.keys(sections)) {
+		const source = path.join(vault, folder);
+		if (!existsSync(source)) throw new Error(`${source} does not exist, refusing to sync`);
+	}
+
 	for (const [folder, section] of Object.entries(sections)) {
 		const source = path.join(vault, folder);
-		// A missing folder is a misconfiguration, not an empty section: treating
-		// it as empty would delete every post in the section.
-		if (!existsSync(source)) throw new Error(`${source} does not exist, refusing to sync`);
-
 		const routeDir = path.join(repoRoot, 'src/routes', section);
 		const wanted = new Map<string, string>();
 		for (const file of readdirSync(source)) {
 			if (!file.endsWith('.md') || file.startsWith('.')) continue;
-			wanted.set(slugify(file), path.join(source, file));
+			const slug = slugify(file);
+			// An empty slug would land on src/routes/<section>/+page.md, beside the
+			// listing's +page.svelte, and SvelteKit refuses a route with two pages.
+			if (!slug)
+				throw new Error(`${file} in ${folder} has no letters or digits to make a URL from`);
+			const other = wanted.get(slug);
+			if (other)
+				throw new Error(
+					`${file} and ${path.basename(other)} in ${folder} would both be /${section}/${slug}`
+				);
+			wanted.set(slug, path.join(source, file));
 		}
 
 		for (const [slug, note] of wanted) {
