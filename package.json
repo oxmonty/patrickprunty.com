@@ -7,7 +7,8 @@
 		"dev": "vite dev --port 4567 --host",
 		"build": "vite build",
 		"preview": "vite preview --port 4567",
-		"prepare": "svelte-kit sync || echo ''",
+		"prepare": "svelte-kit sync || echo ''; git config core.hooksPath .githooks || true",
+		"sync": "bun scripts/sync-posts.ts",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
@@ -43,7 +44,8 @@
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.60.1",
 		"unist-util-visit": "^5.1.0",
-		"vite": "^8.0.16"
+		"vite": "^8.0.16",
+		"yaml": "^2.9.1"
 	},
 	"dependencies": {
 		"@vercel/analytics": "^2.0.1"

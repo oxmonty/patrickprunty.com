@@ -1,0 +1,17 @@
+#!/bin/sh
+# Mirrors the Obsidian vault into the repo before anything leaves the machine.
+# Git has already decided what this push contains, so a sync that changes
+# files cannot ride along: the push stops here, and you commit and push again.
+set -e
+cd "$(git rev-parse --show-toplevel)"
+
+[ -f obsidian.yaml ] || exit 0
+
+bun run --silent sync
+
+if [ -n "$(git status --porcelain -- src/routes/blog src/routes/code)" ]; then
+	echo ""
+	echo "pre-push: the vault had changes that were not in the repo. They are synced"
+	echo "into the working tree; review with 'git status', commit them, and push again."
+	exit 1
+fi

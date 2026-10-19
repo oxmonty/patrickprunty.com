@@ -1,0 +1,7 @@
+# Obsidian integration. The vault is the source of truth for posts: `make sync`
+# mirrors these folders into src/routes, and the dev server does the same on
+# every change. Notes in each folder become /<section>/<file name>. See README.
+vault: ~/2025 Obsidian/2025/PATRICKPRUNTY.COM
+sections:
+  BLOG: blog
+  NOTES: code

@@ -1,4 +1,4 @@
-.PHONY: help install dev build preview lint format check gacp
+.PHONY: help install dev build preview sync lint format check gacp
 
 # Default target - show help
 .DEFAULT_GOAL := help
@@ -26,6 +26,9 @@ build: ## Build for production
 
 preview: build ## Build and preview the production build on port 4567
 	bun run preview
+
+sync: ## Mirror the Obsidian vault into src/routes (VAULT_DIR in .env)
+	bun run sync
 
 ## Quality:
 lint: ## Run Prettier check and ESLint
