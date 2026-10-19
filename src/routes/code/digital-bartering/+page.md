@@ -36,3 +36,5 @@ over a …
 Cursor selling tokens for AI companies like a drug dealer sells drugs for the
 supplier. … When the layman is more accustomed to the sort of … bartering than
 an Ivy League graduate who's ….more often in these board room meetings.
+
+yolo
