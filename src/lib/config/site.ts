@@ -22,7 +22,7 @@ const projects: Project[] = [
 		image: '/projects/delta-poster.webp',
 		url: 'https://deltacomponents.dev',
 		description:
-			'A curated collection of UI components built with TypeScript. Free and open source via the shadcn registry.'
+			'A curated collection of UI components built with TypeScript. Free and open source via the shadcn registry'
 	},
 	{
 		name: 'Jigsaw Presents',
@@ -30,7 +30,7 @@ const projects: Project[] = [
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		draft: true,
 		description:
-			'A YouTube channel presenting video essays on the stories, sounds, and scenes shaping culture (coming 2027)'
+			'A YouTube channel exploring the curious stories and hidden artistry behind film, music, games, and culture (coming 2027)'
 	}
 ];
 
