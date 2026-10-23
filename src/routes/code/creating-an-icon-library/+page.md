@@ -1,6 +1,6 @@
 ---
-title: Create Your Own Icon Library
-description:
+title: Creating an Icon Library
+description: How to use create a uniquely branded icon library for your product using AI
 date: 2026-10-19
 image:
 draft: true
