@@ -78,7 +78,7 @@
 	.signature {
 		display: block;
 		width: 240px;
-		aspect-ratio: 300 / 147;
+		aspect-ratio: 1634 / 793;
 		/* Ink, a shade off full so it reads as a signed mark rather than another
 		   line of text. */
 		background-color: var(--ink);
