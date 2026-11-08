@@ -80,7 +80,7 @@
 		width: 240px;
 		aspect-ratio: 1634 / 793;
 		background-color: var(--ink);
-		opacity: 0.8;
+		opacity: 0.9;
 		mask: url('/signature.svg') no-repeat center / contain;
 	}
 
