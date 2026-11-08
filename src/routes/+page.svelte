@@ -79,10 +79,8 @@
 		display: block;
 		width: 240px;
 		aspect-ratio: 1634 / 793;
-		/* Ink, a shade off full so it reads as a signed mark rather than another
-		   line of text. */
 		background-color: var(--ink);
-		opacity: 0.75;
+		opacity: 0.9;
 		mask: url('/signature.svg') no-repeat center / contain;
 	}
 
