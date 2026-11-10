@@ -30,7 +30,7 @@ const projects: Project[] = [
 		url: 'https://www.youtube.com/channel/UCx8iHEGQMyeInLgPQ81-EJA?sub_confirmation=1',
 		draft: true,
 		description:
-			'A YouTube channel exploring the curious stories and hidden artistry behind film, music, games, and culture (coming 2027)'
+			'An audio-first production, exploring the curious stories and hidden artistry behind film, music, games, and culture (coming 2027)'
 	}
 ];
 
